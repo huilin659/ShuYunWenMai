@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数蕴文脉 · 传统文化中的数字智慧互动教育平台</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #3d566e;
+            --primary-dark: #1a252f;
+            --accent: #c0392b;
+            --accent-light: #e74c3c;
+            --accent-soft: #fdecea;
+            --poetry: #c0392b;
+            --architecture: #8b5e3c;
+            --craft: #e6b422;
+            --calendar: #2980b9;
+            --music: #8e44ad;
+            --mathclassic: #27ae60;
+            --bg-gradient: radial-gradient(circle at 10% 30%, #fef9f4, #fdf3e8);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg-solid: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 8px 20px rgba(44, 62, 80, 0.04);
+            --shadow-md: 0 12px 30px rgba(44, 62, 80, 0.08);
+            --shadow-lg: 0 20px 40px rgba(44, 62, 80, 0.12);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 30px;
+            --transition: all 0.2s ease;
+            --text-primary: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --font-sans: 'Inter', 'Microsoft YaHei', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 0 40px;
+            height: 70px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--glass-border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition);
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #3d2c2c 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(192, 57, 43, 0.2) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            position: relative;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-outline-white {
+            border: 2px solid white;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .section-title i {
+            color: var(--accent);
+            font-size: 28px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            border-top: 6px solid var(--accent);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-card i {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+                      gap: 25px;
+        }
+
+        .knowledge-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            border-left: 6px solid var(--accent);
+            transition: var(--transition);
+        }
+
+        .knowledge-card .card-tag {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .knowledge-card h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .knowledge-card .highlight {
+            font-style: italic;
+            color: var(--accent);
+            font-size: 16px;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--accent-soft);
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .knowledge-card .math-insight {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .tab-container {
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .challenge-card {
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border-top: 5px solid var(--accent);
+        }
+
+        .challenge-card .quiz-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .challenge-card h3 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .challenge-card .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .challenge-card .option {
+            min-width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            padding: 0 15px;
+        }
+
+        .challenge-card .option:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .challenge-card .option.correct {
+            background: var(--mathclassic);
+            color: white;
+            border-color: var(--mathclassic);
+        }
+
+        .challenge-card .option.wrong {
+            background: var(--accent-light);
+            color: white;
+        }
+
+        .workshop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .workshop-card {
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .workshop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .workshop-card i {
+            font-size: 40px;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .workshop-card h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .workshop-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .team-card {
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .team-card .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+
+        .team-card .name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .team-card .role {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .metric-mini-cards {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .mini-card {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 25px 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .mini-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mini-card .value {
+            font-size: 38px;
+            font-weight: 700;
+        }
+
+        .mini-card div:last-child {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .highlight-box {
+            background: var(--accent-soft);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-top: 30px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .highlight-box h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+        }
+
+        .highlight-box li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+        }
+
+        .highlight-box li i {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1a252f, var(--primary-dark));
+            color: #b0c4de;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-left: 5px solid var(--accent);
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .game-card .game-tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .game-tag.poetry { background: var(--poetry); }
+        .game-tag.architecture { background: var(--architecture); }
+        .game-tag.calendar { background: var(--calendar); }
+        .game-tag.music { background: var(--music); }
+        .game-tag.mathclassic { background: var(--mathclassic); }
+        .game-tag.craft { background: var(--craft); }
+
+        .game-card h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .game-card .math-core {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .game-card .play-desc {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .game-container {
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 30px;
+        }
+
+        .game-title {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-title i {
+            color: var(--accent);
+        }
+
+        .game-tips {
+            background: var(--accent-soft);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            color: var(--accent);
+            margin-bottom: 25px;
+        }
+
+        .solarterm-wheel {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, 
+                #f8b195 0deg 15deg, #f67280 15deg 30deg, #c06c84 30deg 45deg, #6c5b7b 45deg 60deg,
+                #355c7d 60deg 75deg, #355c7d 75deg 90deg, #6c5b7b 90deg 105deg, #c06c84 105deg 120deg,
+                #f67280 120deg 135deg, #f8b195 135deg 150deg, #f8b195 150deg 165deg, #f67280 165deg 180deg,
+                #c06c84 180deg 195deg, #6c5b7b 195deg 210deg, #355c7d 210deg 225deg, #355c7d 225deg 240deg,
+                #6c5b7b 240deg 255deg, #c06c84 255deg 270deg, #f67280 270deg 285deg, #f8b195 285deg 300deg,
+                #f8b195 300deg 315deg, #f67280 315deg 330deg, #c06c84 330deg 345deg, #6c5b7b 345deg 360deg
+            );
+            box-shadow: var(--shadow-md);
+            margin-bottom: 30px;
+        }
+
+        .wheel-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .wheel-marker {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid var(--accent);
+            z-index: 10;
+        }
+
+        .solarterm-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .solarterm-item {
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .solarterm-item .degree {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .match-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .match-source, .match-target {
+            width: 300px;
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            min-height: 250px;
+        }
+
+        .match-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .match-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            cursor: grab;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .match-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .match-slot {
+            background: var(--accent-soft);
+            border: 2px dashed var(--accent);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .match-slot.filled {
+            background: white;
+            border: 2px solid var(--mathclassic);
+        }
+
+        .scale-calculator {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: var(--radius-md);
+        }
+
+        .scale-item {
+            margin-bottom: 20px;
+        }
+
+        .scale-item label {
+            display: block;
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .scale-item input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .scale-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+        }
+
+        .scale-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .scale-result.correct {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--mathclassic);
+            display: block;
+        }
+
+        .scale-result.wrong {
+            background: rgba(192, 57, 43, 0.1);
+            color: var(--accent);
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .category-grid,
+            .workshop-grid,
+            .team-grid,
+            .knowledge-grid,
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .solarterm-wheel {
+                width: 300px;
+                height: 300px;
+            }
+            .match-container {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-area">
+            <img src="logo.png" alt="数蕴文脉" style="height: 45px; margin-right: 8px;" onerror="this.style.display='none'">
+            <span class="logo-text">数蕴文脉</span>
+        </div>
+        <div class="nav-links">
+            <a class="active" data-page="home">首页</a>
+            <a data-page="knowledge">知识库</a>
+            <a data-page="challenge">趣闯关</a>
+            <a data-page="workshop">实践工坊</a>
+            <a data-page="game">游戏模式</a>
+            <a data-page="about">关于我们</a>
+        </div>
+        <div class="nav-right">
+            <span style="color: var(--text-secondary); font-size: 14px;">以数学之眼，观文化之美</span>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>数 蕴 文 脉</h1>
+        <p>传统文化中的数字智慧互动教育平台 · 建筑、历法、工艺、音律、算学 —— 从中华传统文化中汲取数学智慧</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-white" onclick="switchPage('knowledge')">探索知识库</a>
+            <a href="#" class="btn-outline-white" onclick="switchPage('game')">玩转数学游戏</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 首页 -->
+        <div id="page-home" class="page active">
+            <!-- 首页视频介绍 -->
+            <div class="section" style="text-align: center; padding: 30px 0 20px 0;">
+             <div style="max-width: 1400px; margin: 0 auto;">
+                    <video controls style="width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        <source src="intro.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                    <p style="margin-top: 12px; color: var(--text-secondary); font-size: 14px;">📹 数蕴文脉平台介绍</p>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title"><i class="fas fa-th-large"></i> 文化数学六大板块</div>
+                <div class="category-grid">
+                    <div class="category-card" onclick="switchPage('knowledge'); setTimeout(()=>switchTab('poetry'),100);" style="border-top-color: var(--poetry);">
+                        <i class="fas fa-feather-alt" style="color: var(--poetry);"></i><h3>诗词数学</h3><p>格律中的数列、对仗与映射、数字意象</p>
+                    </div>
+                    <div class="category-card" onclick="switchPage('knowledge'); setTimeout(()=>switchTab('architecture'),100);" style="border-top-color: var(--architecture);">
+                        <i class="fas fa-landmark" style="color: var(--architecture);"></i><h3>建筑几何</h3><p>对称比例、榫卯结构、营造法式模数体系</p>
+                    </div>
+                    <div class="category-card" onclick="switchPage('knowledge'); setTimeout(()=>switchTab('craft'),100);" style="border-top-color: var(--craft);">
+                        <i class="fas fa-cut" style="color: var(--craft);"></i><h3>工艺之美</h3><p>剪纸对称、陶瓷旋转、编织拓扑</p>
+                    </div>
+                    <div class="category-card" onclick="switchPage('knowledge'); setTimeout(()=>switchTab('calendar'),100);" style="border-top-color: var(--calendar);">
+                        <i class="fas fa-sun" style="color: var(--calendar);"></i><h3>历法天文</h3><p>节气角度、闰月周期、日晷投影几何</p>
+                    </div>
+                    <div class="category-card" onclick="switchPage('knowledge'); setTimeout(()=>switchTab('music'),100);" style="border-top-color: var(--music);">
+                        <i class="fas fa-music" style="color: var(--music);"></i><h3>音律数理</h3><p>三分损益法频率比、编钟等比数列</p>
+                    </div>
+                    <div class="category-card" onclick="switchPage('knowledge'); setTimeout(()=>switchTab('mathclassic'),100);" style="border-top-color: var(--mathclassic);">
+                        <i class="fas fa-calculator" style="color: var(--mathclassic);"></i><h3>经典算学</h3><p>算筹记数、九章算术、勾股定理证明</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 知识库页面（深度填充） -->
+        <div id="page-knowledge" class="page">
+            <div class="section">
+                <div class="section-title"><i class="fas fa-book-open"></i> 趣味知识库</div>
+                <div class="tab-container">
+                    <div class="tab-buttons" id="knowledgeTabs">
+                        <button class="tab-btn active" data-tab="poetry" style="border-color: var(--poetry); color: var(--poetry);"><i class="fas fa-feather-alt"></i> 诗词数学</button>
+                        <button class="tab-btn" data-tab="architecture"><i class="fas fa-landmark"></i> 建筑几何</button>
+                        <button class="tab-btn" data-tab="craft"><i class="fas fa-cut"></i> 工艺之美</button>
+                        <button class="tab-btn" data-tab="calendar"><i class="fas fa-sun"></i> 历法天文</button>
+                        <button class="tab-btn" data-tab="music"><i class="fas fa-music"></i> 音律数理</button>
+                        <button class="tab-btn" data-tab="mathclassic"><i class="fas fa-square-root-alt"></i> 经典算学</button>
+                    </div>
+                    <!-- 诗词数学 -->
+                    <div class="tab-content active" id="tab-poetry">
+                        <div class="knowledge-grid">
+                            <div class="knowledge-card"><span class="card-tag">第一期</span><h3>《山村咏怀》等差数列</h3><div class="highlight">一去二三里，烟村四五家。<br>亭台六七座，八九十枝花。</div><p class="math-insight">1到10自然数列，总和55。古人写诗心中有数。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">第二期</span><h3>《登鹳雀楼》文字矩阵</h3><div class="highlight">白日依山尽，黄河入海流。<br>欲穷千里目，更上一层楼。</div><p class="math-insight">4句×5字=20字矩形。五言绝句的数学骨架。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">第三期</span><h3>数字对仗与一一映射</h3><div class="highlight">两个黄鹂鸣翠柳，一行白鹭上青天。</div><p class="math-insight">词词对应，工整如数学映射关系。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">二进制</span><h3>平仄的二进制编码</h3><div class="highlight">平平仄仄平平仄 → 将平声记作0，仄声记作1，一句七言诗可转换为7位二进制码</div><p class="math-insight">律句平仄排列具有周期性，类似循环码。古诗词的音韵之美，原来可以数字化。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">坐标</span><h3>诗词中的时空坐标</h3><div class="highlight">即从巴峡穿巫峡，便下襄阳向洛阳。</div><p class="math-insight">杜甫用四个地名描绘了一条有序路径，宛如坐标系中的序列移动。时空的线性变换在诗中成为归乡的最短路径算法。</p></div>
+                        </div>
+                    </div>
+                    <!-- 建筑几何 -->
+                    <div class="tab-content" id="tab-architecture">
+                        <div class="knowledge-grid">
+                            <div class="knowledge-card"><span class="card-tag">天坛</span><h3>圜丘坛的9的倍数</h3><div class="highlight">最上层石板9块，每圈9的倍数，三层共3402块</div><p class="math-insight">栏板、台阶均为9的倍数。“9”象征天，是“极阳之数”。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">故宫</span><h3>中轴线对称与黄金分割</h3><div class="highlight">太和殿位于紫禁城中轴线，立面比例接近0.618</div><p class="math-insight">中国古代建筑虽未明确标注黄金分割，但其视觉和谐常暗合这一比例。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">赵州桥</span><h3>拱形曲线的悬链线猜想</h3><div class="highlight">“天下第一桥”的拱轴线接近悬链线，数学上承压最优</div><p class="math-insight">古人凭经验找到了接近最优的拱形，比欧洲早千年。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">应县木塔</span><h3>层高递减的等差规律</h3><div class="highlight">塔高67.31米，明五暗四共九层，各层高度由下而上逐渐减小，近似等差数列</div><p class="math-insight">递减的层高既符合结构稳定性要求，又形成优美的视觉韵律。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">苏州园林</span><h3>框景中的相似三角形</h3><div class="highlight">透过漏窗看景，窗框与远景形成天然的比例关系</div><p class="math-insight">造园家利用视线通廊构建多个相似三角形，使景物在有限的庭院中产生深远的空间感。</p></div>
+                                                        <div class="knowledge-card" onclick="openGoldSequence()" style="cursor:pointer;"><span class="card-tag">黄金分割</span><h3>黄金分割：0.618的数学之美</h3><div class="highlight">黄金比例 φ = (1+√5)/2 ≈ 1.618<br>其倒数 Φ = φ-1 ≈ 0.618</div><p class="math-insight">黄金分割被广泛应用于古今中外的建筑设计。古希腊帕特农神庙的立面、古埃及金字塔的斜面、中国故宫太和殿的高宽比，都暗合了这一被认为最美观的比例。斐波那契数列相邻两项之比无限趋近于 φ，体现了自然界中数学的和谐统一。</p></div>
+                        </div>
+                    </div>
+                                        <!-- 工艺之美 -->
+                    <div class="tab-content" id="tab-craft">
+                        <div class="knowledge-grid">
+<div class="knowledge-card">
+    <span class="card-tag">蝴蝶曲线</span>
+    <h3>蝴蝶剪纸与蝴蝶曲线</h3>
+    <div class="highlight" onclick="openImageModal('butterfly.png', '蝴蝶剪纸与蝴蝶曲线', '蝴蝶剪纸象征夫妇好合、情深意长。数学上的蝴蝶曲线 ρ = e^(cos θ) - 2cos4θ + sin(θ/12)^5 呈现优美的轴对称形态。该极坐标方程生成的曲线具有一个中心点和两个对称分支，是笛卡尔坐标系中最优雅的曲线之一。')" style="cursor:pointer;">蝴蝶剪纸象征夫妇好合、情深意长。<br>数学上的蝴蝶曲线呈现优美的轴对称形态，<br>剪纸的对称折叠正暗合了这一曲线的数学美感。<br><span style="font-size:12px; color:var(--accent); margin-top:5px; display:block;">📷 点击查看图片与方程</span></div>
+    <p class="math-insight">蝴蝶剪纸象征夫妇好合、情深意长。数学上的蝴蝶曲线 ρ = e^(cos θ) - 2cos4θ + sin(θ/12)^5 呈现优美的轴对称形态，剪纸的对称折叠正暗合了这一曲线的数学美感。</p>
+</div>
+<div class="knowledge-card">
+    <span class="card-tag">心形线</span>
+    <h3>心形剪纸与心形线</h3>
+    <div class="highlight" onclick="openImageModal('cardioid.png', '心形剪纸与心形线', '心形剪纸寓意好事成双、幸福美满。数学上的心形线是圆外摆线的一种——当一个圆沿另一个等半径圆外侧滚动时，固定点的轨迹即形成心形。参数方程 x = a(2cost - cos2t), y = a(2sint - sin2t) 精准描绘了这一浪漫曲线。')" style="cursor:pointer;">心形剪纸寓意好事成双、幸福美满。<br>数学上的心形线是圆外摆线的一种，<br>其参数方程精准描绘了这一浪漫曲线。<br><span style="font-size:12px; color:var(--accent); margin-top:5px; display:block;">📷 点击查看图片与方程</span></div>
+    <p class="math-insight">心形剪纸寓意好事成双。数学上的心形线是圆外摆线——一个圆沿等半径圆滚动时固定点的轨迹，参数方程 x = a(2cost - cos2t), y = a(2sint - sin2t) 描绘的曲线与剪纸轮廓惊人一致。</p>
+</div>
+<div class="knowledge-card">
+    <span class="card-tag">四叶草曲线</span>
+    <h3>四叶草剪纸与四叶草曲线</h3>
+    <div class="highlight" onclick="openImageModal('clover.png', '四叶草剪纸与四叶草曲线', '四叶草剪纸的四片叶子分别代表财富、荣誉、爱情和健康。极坐标方程 ρ = sinθ·cosθ 具有四重旋转对称性。剪纸通过折叠四次即可一次剪出四瓣，是几何变换群论的生动实践。')" style="cursor:pointer;">四叶草的四片叶子代表财富、荣誉、爱情和健康。<br>极坐标方程具有四重旋转对称性，<br>剪纸通过折叠四次即可一次剪出四瓣。<br><span style="font-size:12px; color:var(--accent); margin-top:5px; display:block;">📷 点击查看图片与方程</span></div>
+    <p class="math-insight">四叶草的四片叶子代表财富、荣誉、爱情和健康。极坐标方程 ρ = sinθ·cosθ 具有四重旋转对称性。剪纸通过折叠四次即可一次剪出四瓣，是几何变换的生动实践。</p>
+</div>
+                            <div class="knowledge-card"><span class="card-tag">剪纸</span><h3>对称变换几何</h3><div class="highlight">对折后再剪，打开即得轴对称图案</div><p class="math-insight">折叠次数n，图案区域数为2^n。旋转对称更蕴含群论思想。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">瓷器</span><h3>旋转体与同心圆</h3><div class="highlight">拉坯过程中，泥料绕轴线旋转，形成完美旋转体</div><p class="math-insight">任何横截面都是同心圆，是利用旋转运动产生对称几何的典范。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">中国结</span><h3>拓扑学入门</h3><div class="highlight">一根绳子绕圈穿插，形成复杂交织却不断开</div><p class="math-insight">绳结本质是三维空间中的闭合曲线，是拓扑学研究对象。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">云锦</span><h3>经纬密度与信息像素</h3><div class="highlight">明代云锦经线密度可达120根/厘米，纬线密度也有近百根</div><p class="math-insight">每一小块织物都是一个高密度像素矩阵。织造前需精确“算纬”，将图案分解为格点坐标，本质上是一种古老的数字化图像处理。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">风筝</span><h3>骨架的对称与平衡</h3><div class="highlight">硬翅风筝以中心龙骨为轴，左右严格对称，确保飞行稳定性</div><p class="math-insight">风筝骨架构建了轴对称的受力结构，三角形与四边形的组合使重心与升力中心重合，是力学几何化的生动体现。</p></div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="tab-calendar">
+                        <div class="knowledge-grid">
+                            <div class="knowledge-card"><span class="card-tag">二十四节气</span><h3>太阳黄经的等差数列</h3><div class="highlight">相邻节气太阳黄经相差15°</div><p class="math-insight">黄道360°等分24份，冬至0°起算。是天文与数学的绝妙结合。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">闰月设置</span><h3>同余问题与调和周期</h3><div class="highlight">19年7闰，使农历与回归年基本同步</div><p class="math-insight">19×12+7=235个朔望月 ≈ 19回归年。体现了古人对周期的最小公倍数直觉。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">日晷</span><h3>投影几何与三角函数</h3><div class="highlight">晷针影子在表盘上均匀移动，但刻度并不均匀</div><p class="math-insight">日晷刻度涉及三角函数，是古代应用数学的杰出代表。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">朔望月</span><h3>29.5天的近似与大小月</h3><div class="highlight">一个朔望月约29.53059天，古人设置大月30天、小月29天来逼近真实值</div><p class="math-insight">大小月的交替排列本质上是一个分数逼近问题：如何用整数天尽可能精确地逼近无理数周期。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">岁差</span><h3>地球自转轴的缓慢进动</h3><div class="highlight">地轴进动周期约26000年，古人通过长期观测恒星位置缓慢漂移发现了这一现象</div><p class="math-insight">岁差让春分点每年西移约50角秒，东晋天文学家虞喜首次明确提出岁差概念，这需要对角度变化有极其敏锐的数学感觉。</p></div>
+                        </div>
+                    </div>
+                    <!-- 音律数理 -->
+                    <div class="tab-content" id="tab-music">
+                        <div class="knowledge-grid">
+                            <div class="knowledge-card"><span class="card-tag">三分损益法</span><h3>2:3频率比的等比递推</h3><div class="highlight">“三分损一”和“三分益一”生成五声音阶</div><p class="math-insight">从一根弦开始，反复乘2/3或4/3，即得宫商角徵羽。本质是等比数列。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">编钟</span><h3>音高与钟体大小的数学关系</h3><div class="highlight">曾侯乙编钟每枚钟可发双音，音列跨五个半八度</div><p class="math-insight">钟的振动频率与尺寸成反比，古人通过精确铸造来控制音高。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">十二律</span><h3>等比数列与平均律尝试</h3><div class="highlight">十二律相邻频率比约为2^(1/12)</div><p class="math-insight">明代朱载堉发明十二平均律，早于西方50年，是等比数列在音乐中的完美应用。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">琴律</span><h3>弦长与音高的反比例关系</h3><div class="highlight">琴弦振动频率与弦长成反比，短弦音高，长弦音低</div><p class="math-insight">古琴的徽位标记正是按弦长比例划分的：1/2、1/3、1/4……每一个徽位对应一个泛音节点，是分数与音程的完美映射。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">音律比较</span><h3>五度相生律与纯律的整数比</h3><div class="highlight">大三度在五度相生律中为81/64，纯律中则为5/4</div><p class="math-insight">不同的生律法对应不同的有理数逼近策略。古人在追求和谐与转调之间，其实是在数学上寻找最优分数逼近。</p></div>
+                        </div>
+                    </div>
+                    <!-- 经典算学 -->
+                    <div class="tab-content" id="tab-mathclassic">
+                                                 <!-- 视频卡片1 -->
+                            <div class="knowledge-card" onclick="openVideoModal('mathintro.mp4', '经典算学视频讲解（上）', '了解《九章算术》与古代数学智慧')" style="cursor:pointer;">
+                                <span class="card-tag">视频</span>
+                                <h3>📹 经典算学 · 视频讲解（上）</h3>
+                                <div class="highlight">点击观看《九章算术》<br>与古代数学智慧<br><span style="font-size:12px; color:var(--accent); margin-top:5px; display:block;">▶ 点击播放视频</span></div>
+                                <p class="math-insight">了解《九章算术》方田章、粟米章等核心内容，感受古代数学的实用智慧。</p>
+                            </div>
+                            <!-- 视频卡片2 -->
+                            <div class="knowledge-card" onclick="openVideoModal('mathintro2.mp4', '经典算学视频讲解（下）', '了解《孙子算经》与秦九韶大衍求一术等领域')" style="cursor:pointer;">
+                                <span class="card-tag">视频</span>
+                                <h3>📹 经典算学 · 视频讲解（下）</h3>
+                                <div class="highlight">点击观看《孙子算经》<br>与秦九韶大衍求一术<br><span style="font-size:12px; color:var(--accent); margin-top:5px; display:block;">▶ 点击播放视频</span></div>
+                                <p class="math-insight">探索“物不知数”问题的解法，以及中国古代数论史上的重要里程碑。</p>
+                            </div>  
+                        <div class="knowledge-grid">
+                            <div class="knowledge-card"><span class="card-tag">九章算术</span><h3>方田章面积公式</h3><div class="highlight">“方田术曰：广从步数相乘得积步。” 即矩形面积=长×宽</div><p class="math-insight">包含三角形、梯形、圆等面积公式，大部分正确，少数近似。是实用数学的典范。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">孙子算经</span><h3>“物不知数”与剩余定理</h3><div class="highlight">“三三数之剩二，五五数之剩三，七七数之剩二” 最小解23</div><p class="math-insight">解法为70×2+21×3+15×2-105×2=23。是中国剩余定理的源头。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">赵爽弦图</span><h3>勾股定理的无字证明</h3><div class="highlight">四个直角三角形围成正方形，面积计算即可导出a²+b²=c²</div><p class="math-insight">赵爽注《周髀算经》用弦图给出了勾股定理的严格证明，简洁优美。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">刘徽</span><h3>割圆术与圆周率逼近</h3><div class="highlight">“割之弥细，所失弥少。” 用正多边形逼近圆，计算到正3072边形得π≈3.1416</div><p class="math-insight">刘徽用极限思想计算圆周率，每次边数倍增，面积接近真实值。这是中国古代最接近微积分思想的数学成果之一。</p></div>
+                            <div class="knowledge-card"><span class="card-tag">秦九韶</span><h3>大衍求一术与同余方程</h3><div class="highlight">《数书九章》中系统解决了一次同余方程组问题</div><p class="math-insight">秦九韶的“大衍求一术”用辗转相除法求乘率，完美解决了“物不知数”类问题的通用解法，比高斯早500多年，是数论史上的里程碑。</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 趣闯关页面（六大板块深度题库） -->
+        <div id="page-challenge" class="page">
+            <div class="section">
+                <div class="section-title"><i class="fas fa-puzzle-piece"></i> 数学文化趣闯关</div>
+                <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 10px; line-height: 1.7;">
+                    六大板块 · 共30道精选试题 · 每题10分 · 满分300分<br>
+                    <span style="font-size: 13px; color: #999;">点击答案即判对错：<span style="color: #27ae60;">绿色正确</span> · <span style="color: #e74c3c;">红色错误</span> · 每题仅一次作答机会</span>
+                </p>
+                <div class="tab-buttons" id="challengeTabs">
+                    <button class="tab-btn active" data-ctab="poetry" style="border-color: var(--poetry); color: var(--poetry);"><i class="fas fa-feather-alt"></i> 诗词数学</button>
+                    <button class="tab-btn" data-ctab="architecture" style="border-color: var(--architecture); color: var(--architecture);"><i class="fas fa-landmark"></i> 建筑几何</button>
+                    <button class="tab-btn" data-ctab="craft" style="border-color: var(--craft); color: #b8931e;"><i class="fas fa-cut"></i> 工艺之美</button>
+                    <button class="tab-btn" data-ctab="calendar" style="border-color: var(--calendar); color: var(--calendar);"><i class="fas fa-sun"></i> 历法天文</button>
+                    <button class="tab-btn" data-ctab="music" style="border-color: var(--music); color: var(--music);"><i class="fas fa-music"></i> 音律数理</button>
+                    <button class="tab-btn" data-ctab="mathclassic" style="border-color: var(--mathclassic); color: var(--mathclassic);"><i class="fas fa-square-root-alt"></i> 经典算学</button>
+                </div>
+                <div class="tab-content active" id="ctab-poetry"><div class="challenge-grid" id="challenge-poetry"></div></div>
+                <div class="tab-content" id="ctab-architecture"><div class="challenge-grid" id="challenge-architecture"></div></div>
+                <div class="tab-content" id="ctab-craft"><div class="challenge-grid" id="challenge-craft"></div></div>
+                <div class="tab-content" id="ctab-calendar"><div class="challenge-grid" id="challenge-calendar"></div></div>
+                <div class="tab-content" id="ctab-music"><div class="challenge-grid" id="challenge-music"></div></div>
+                <div class="tab-content" id="ctab-mathclassic"><div class="challenge-grid" id="challenge-mathclassic"></div></div>
+                <!-- 经典算学游戏：算筹开方术 -->
+<div id="game-quadratics" class="game-content" style="display: block; margin-top: 30px;">
+    <div class="game-container">
+        <div class="game-title">
+            <i class="fas fa-square-root-alt"></i> 算筹开方术 · 一元二次方程几何解
+        </div>
+        <div class="game-tips">
+            💡 提示：《九章算术》开方术以面积模型解方程。左侧为“开方图”，请将一次项矩形“分补”入正方形，完成配方。右侧同步展示现代代数配方法。
+        </div>
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 20px;">
+            <!-- 开方图几何区域 -->
+            <div style="flex: 1; min-width: 350px; background: #fdf8f4; border-radius: var(--radius-md); padding: 20px; text-align: center;">
+                <h4 style="color: var(--primary); margin-bottom: 15px;">📐 开方图（面积模型）</h4>
+                <div id="geometry-area" style="position: relative; width: 300px; height: 300px; margin: 0 auto; background: #fcfaf5; border: 2px solid var(--accent); border-radius: var(--radius-sm);">
+                    <!-- 动态生成的几何图形 -->
+                </div>
+                <div style="margin-top: 15px;">
+                    <button class="btn-white" id="btn-split" onclick="splitRectangle()" style="padding: 8px 20px; margin: 5px;">✂️ 分割一次项矩形</button>
+                    <button class="btn-white" id="btn-complete" onclick="completeSquare()" style="padding: 8px 20px; margin: 5px;">📏 补成全正方形</button>
+                    <button class="btn-solid" id="btn-verify" onclick="verifySolution()" style="padding: 8px 20px; margin: 5px; display: none;">✅ 验证答案</button>
+                </div>
+                <p id="geometry-feedback" style="margin-top: 10px; font-size: 14px; color: var(--accent);"></p>
+            </div>
+            <!-- 代数步骤区域 -->
+            <div style="flex: 1; min-width: 300px; background: #f5f9fc; border-radius: var(--radius-md); padding: 20px;">
+                <h4 style="color: var(--primary); margin-bottom: 15px;">📝 现代代数配方法</h4>
+                <div id="algebra-steps" style="font-size: 15px; line-height: 2; color: var(--text-primary);">
+                    <!-- 动态生成的代数步骤 -->
+                </div>
+            </div>
+        </div>
+        <!-- 输入答案区域 -->
+        <div id="answer-area" style="text-align: center; display: none;">
+            <p style="font-size: 16px; color: var(--primary); margin-bottom: 15px;">请输入方程的正根：X = <input type="number" id="solution-input" style="width: 80px; padding: 8px; border-radius: 8px; border: 2px solid var(--accent); font-size: 16px; text-align: center;"></p>
+            <button class="btn-solid" onclick="checkSolution()">提交答案</button>
+            <p id="solution-feedback" style="margin-top: 10px; font-size: 14px;"></p>
+        </div>
+    </div>
+</div>
+<div class="highlight-box" style="text-align: center; margin-top: 40px;">
+                    <h3 style="font-size: 20px;"><i class="fas fa-trophy"></i> 当前板块得分</h3>
+                    <p style="font-size: 56px; font-weight: 700; color: var(--accent); margin: 10px 0; line-height: 1;">
+                        <span id="scoreDisplay">0</span> <span style="font-size: 20px; color: var(--text-secondary);">/ 50</span>
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                        <button class="btn-white" onclick="resetQuiz()" style="border: 1px solid var(--accent); padding: 10px 25px;"><i class="fas fa-redo"></i> 重新挑战当前板块</button>
+                        <button class="btn-solid" onclick="switchChallengeTab(getRandomTab())" style="padding: 10px 25px;"><i class="fas fa-random"></i> 随机切换板块</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 实践工坊页面 -->
+        <div id="page-workshop" class="page">
+            <div class="section">
+                <div class="section-title"><i class="fas fa-hands"></i> 实践体验工坊</div>
+                <div class="workshop-grid">
+                   <div class="workshop-card" onclick="startWorkshopGame()">
+    <i class="fas fa-puzzle-piece"></i><h3>七巧板诗词创作</h3><p>拼出诗意，理解几何变换与面积守恒。</p>
+</div>
+                    <div class="workshop-card"><i class="fas fa-cube"></i><h3>榫卯结构探索</h3><p>拼接鲁班锁，感受空间结构力学。</p></div>
+                    <div class="workshop-card"><i class="fas fa-cut"></i><h3>对称剪纸课堂</h3><p>创作轴对称图案，发现几何变换之美。</p></div>
+                    <div class="workshop-card"><i class="fas fa-draw-polygon"></i><h3>古建筑比例研究</h3><p>用卡纸还原太和殿，探究模数与比例。</p></div>
+                    <div class="workshop-card"><i class="fas fa-knot"></i><h3>绳结中的拓扑学</h3><p>学编中国结，在绕线中触摸拓扑。</p></div>
+                    <div class="workshop-card"><i class="fas fa-calculator"></i><h3>算盘与珠算体验</h3><p>拨动算珠，理解十进制与五升制。</p></div>
+                    <div class="workshop-card"><i class="fas fa-sun"></i><h3>简易日晷制作</h3><p>用纸板吸管做日晷，验证投影几何。</p></div>
+                    <div class="workshop-card"><i class="fas fa-music"></i><h3>吸管编钟调音实验</h3><p>剪不同长度吸管，发现频率反比规律。</p></div>
+                    <div class="workshop-card"><i class="fas fa-shapes"></i><h3>赵爽弦图拼板</h3><p>四块直角三角形拼正方形，直观证明勾股定理。</p></div>
+                </div>
+<!-- 全屏游戏区域（默认隐藏） -->
+<div id="workshop-game-area" style="display:none; background: var(--card-bg-solid); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-md); margin-top: 20px;">
+    <button onclick="closeWorkshopGame()" style="margin-bottom: 20px; padding: 8px 20px; background: white; border: 1px solid var(--primary); border-radius: 25px; cursor: pointer; color: var(--primary); font-weight: 500;">← 返回实践工坊</button>
+    <div id="workshop-game-inner"></div>
+</div>
+            </div>
+        </div>
+
+        <!-- 游戏模式 -->
+        <div id="page-game" class="page">
+            <div class="section">
+                <div class="section-title"><i class="fas fa-gamepad"></i> 文化数学游戏总览</div>
+                <div class="game-grid">
+                    <div class="game-card" onclick="switchGame('solarterm-wheel')" style="border-left-color: var(--calendar);"><span class="game-tag calendar">历法天文</span><h3>节气轮盘</h3><div class="math-core">数学核心：角度测量、周期函数</div><div class="play-desc">转动黄道轮盘，将24节气对准对应太阳黄经角度（每节气15°等差数列）</div></div>
+                    <div class="game-card" onclick="switchGame('poetry-match')" style="border-left-color: var(--poetry);"><span class="game-tag poetry">诗词数学</span><h3>诗词对仗匹配</h3><div class="math-core">数学核心：映射关系、逻辑配对</div><div class="play-desc">上联词条散落，拖拽到下联对应位置，形成一一映射的对仗关系</div></div>
+                    <div class="game-card" onclick="switchGame('architecture-scale')" style="border-left-color: var(--architecture);"><span class="game-tag architecture">建筑几何</span><h3>营造比例尺</h3><div class="math-core">数学核心：比例计算、模数体系</div><div class="play-desc">给定《营造法式》材分制基准，计算并验证古建筑各构件实际尺寸</div></div>
+                    <div class="game-card" style="border-left-color: var(--music);"><span class="game-tag music">音律数理</span><h3>三分损益调音台</h3><div class="math-core">数学核心：等比数列、频率比</div><div class="play-desc">拖动滑块改变弦长比例，听音高变化并调出五声音阶（开发中）</div></div>
+                    <div class="game-card" style="border-left-color: var(--mathclassic);"><span class="game-tag mathclassic">经典算学</span><h3>勾股拼图</h3><div class="math-core">数学核心：面积守恒、几何证明</div><div class="play-desc">拖拽直角三角形拼出正方形，验证勾股定理（开发中）</div></div>
+                    <div class="game-card" style="border-left-color: var(--mathclassic);"><span class="game-tag mathclassic">经典算学</span><h3>算筹解密</h3><div class="math-core">数学核心：位值制、方程求解</div><div class="play-desc">用算筹摆出《九章算术》方程并求解（开发中）</div></div>
+                    <div class="game-card" onclick="switchGame('golden-ratio')" style="border-left-color: var(--architecture);"><span class="game-tag architecture">建筑几何</span><h3>黄金比例探索</h3><div class="math-core">数学核心：无理数 φ、比例计算、矩形验证</div><div class="play-desc">拖动滑块调整矩形长边，当长宽比逼近1.618时锁定，验证黄金矩形的视觉和谐感</div></div>
+                </div>
+                <div id="game-solarterm-wheel" class="game-content" style="display: none;">
+                    <div class="game-container"><div class="game-title"><i class="fas fa-sun"></i> 节气轮盘挑战</div><div class="game-tips">提示：24节气对应太阳黄经0°~360°，每节气间隔15°（春分0°、清明15°、立夏45°、夏至90°...），拖动轮盘将「当前节气」对准上方标记！</div><div class="solarterm-wheel" id="wheel" onmousedown="startRotate(event)" onmouseup="stopRotate()" onmouseleave="stopRotate()"><div class="wheel-marker"></div><div class="wheel-inner" id="wheel-degree">0°</div></div><div class="solarterm-list"><div class="solarterm-item">春分 <div class="degree">0°</div></div><div class="solarterm-item">清明 <div class="degree">15°</div></div><div class="solarterm-item">谷雨 <div class="degree">30°</div></div><div class="solarterm-item">立夏 <div class="degree">45°</div></div><div class="solarterm-item">小满 <div class="degree">60°</div></div><div class="solarterm-item">芒种 <div class="degree">75°</div></div><div class="solarterm-item">夏至 <div class="degree">90°</div></div><div class="solarterm-item">小暑 <div class="degree">105°</div></div><div class="solarterm-item">大暑 <div class="degree">120°</div></div><div class="solarterm-item">立秋 <div class="degree">135°</div></div><div class="solarterm-item">处暑 <div class="degree">150°</div></div><div class="solarterm-item">白露 <div class="degree">165°</div></div><div class="solarterm-item">秋分 <div class="degree">180°</div></div><div class="solarterm-item">寒露 <div class="degree">195°</div></div><div class="solarterm-item">霜降 <div class="degree">210°</div></div><div class="solarterm-item">立冬 <div class="degree">225°</div></div><div class="solarterm-item">小雪 <div class="degree">240°</div></div><div class="solarterm-item">大雪 <div class="degree">255°</div></div><div class="solarterm-item">冬至 <div class="degree">270°</div></div><div class="solarterm-item">小寒 <div class="degree">285°</div></div><div class="solarterm-item">大寒 <div class="degree">300°</div></div><div class="solarterm-item">立春 <div class="degree">315°</div></div><div class="solarterm-item">雨水 <div class="degree">330°</div></div><div class="solarterm-item">惊蛰 <div class="degree">345°</div></div></div></div>
+                </div>
+                <div id="game-poetry-match" class="game-content" style="display: none;">
+                    <div class="game-container"><div class="game-title"><i class="fas fa-feather-alt"></i> 诗词对仗匹配</div><div class="game-tips">提示：拖拽左侧上联词条到右侧下联对应凹槽，形成「一一映射」的对仗关系！</div><div class="match-container"><div class="match-source"><div class="match-title">上联（拖拽我）</div><div class="match-item" draggable="true" data-id="1">两个</div><div class="match-item" draggable="true" data-id="2">黄鹂</div><div class="match-item" draggable="true" data-id="3">鸣</div><div class="match-item" draggable="true" data-id="4">翠柳</div></div><div class="match-target"><div class="match-title">下联（放入对应位置）</div><div class="match-slot" data-slot="1">请放入数量词</div><div class="match-slot" data-slot="2">请放入名词</div><div class="match-slot" data-slot="3">请放入动词</div><div class="match-slot" data-slot="4">请放入名词</div></div></div><div id="match-result" class="scale-result" style="display: none;">匹配正确！对仗关系符合数学「双射」逻辑</div></div>
+                </div>
+                <div id="game-architecture-scale" class="game-content" style="display: none;">
+                    <div class="game-container"><div class="game-title"><i class="fas fa-ruler"></i> 营造比例尺计算</div><div class="game-tips">提示：《营造法式》中「材」为基准模数（1材=15分=18厘米），请根据比例计算构件实际尺寸！</div><div class="scale-calculator"><div class="scale-item"><label>基准「材」的尺寸（厘米）：</label><input type="number" id="base-material" placeholder="输入18（固定值）" value="18"></div><div class="scale-item"><label>梁高比例（材）：</label><input type="number" id="beam-ratio" placeholder="输入4（固定值）" value="4"></div><div class="scale-item"><label>计算结果：梁高（厘米）=</label><input type="number" id="beam-result" placeholder="请输入计算结果（18×4）"></div><button class="btn-white" style="width: 100%; margin-top: 10px;" onclick="calcScale()">验证答案</button><div id="scale-result" class="scale-result">结果提示</div></div></div>
+                </div>
+                <div id="game-golden-ratio" class="game-content" style="display: none;">
+                    <div class="game-container">
+                        <div class="game-title"><i class="fas fa-grip-lines"></i> 黄金比例探索</div>
+                        <div class="game-tips">💡 提示：拖动滑块调整矩形长边，当长宽比接近 1.618（黄金比例 φ）时，矩形会呈现最美观的形态。古代建筑师正是用这个比例来设计建筑的。</div>
+                        <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start;">
+                            <div style="flex: 1; min-width: 300px; background: #fdf8f4; border-radius: 20px; padding: 20px; text-align: center;">
+                                <h4 style="color: var(--primary); margin-bottom: 15px;">📐 动态矩形（高固定为 200px）</h4>
+                                <canvas id="goldenCanvas" width="500" height="300" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);"></canvas>
+                                <p id="goldenRatioDisplay" style="margin-top: 15px; font-size: 18px; font-weight: 600; color: var(--primary);">当前比例：1.000</p>
+                                <p id="goldenFeedback" style="font-size: 14px; color: var(--text-secondary); margin-top: 5px;">目标比例：1.618（φ）</p>
+                            </div>
+                            <div style="flex: 1; min-width: 280px; background: #f5f9fc; border-radius: 20px; padding: 20px;">
+                                <h4 style="color: var(--primary); margin-bottom: 15px;">🎚️ 调整长边长度</h4>
+                                <input type="range" id="goldenSlider" min="200" max="600" value="200" step="1" style="width: 100%; margin: 20px 0;" oninput="updateGoldenRect()">
+                                <p id="sliderValue" style="text-align: center; font-size: 16px; color: var(--primary);">长边：200px</p>
+                                <div id="goldenResult" style="margin-top: 20px; padding: 15px; border-radius: 12px; background: var(--accent-soft); color: var(--text-secondary); font-size: 14px; text-align: center; display: none;">结果提示</div>
+                                <button class="btn-white" onclick="checkGoldenRatio()" style="margin-top: 15px; width: 100%;">✅ 锁定比例</button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; background: #eafaf1; border-radius: 12px; padding: 15px;">
+                            <p style="font-size: 14px; color: var(--primary);">📖 黄金分割在传统建筑中：故宫太和殿立面高宽比接近 0.618（即宽高比接近 1.618）；应县木塔各层高度比也呈现近似黄金分割的递减规律。古人虽未明确提出这一概念，但在实践中不断趋近这一最美的比例。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 关于我们 -->
+        <div id="page-about" class="page">
+            <div class="section">
+                <div class="section-title"><i class="fas fa-info-circle"></i> 关于数蕴文脉</div>
+                <div style="display: flex; gap: 50px; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 300px;">
+                        <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.8; margin-bottom: 20px;">“数蕴文脉——传统文化中的数字智慧互动教育平台”立足于中华优秀传统文化传承与新文科建设，以文化普及、美育提升为核心目标，面向青少年与社会公众，创新性地将数学思维融入传统文化传播。</p>
+                        <div class="highlight-box"><h3>项目亮点</h3><ul><li><i class="fas fa-check-circle"></i> 跨学科融合：文学+历史+数学+设计，新文科新理科交叉实践</li><li><i class="fas fa-check-circle"></i> 轻量化运营：免费工具搭建，零代码维护，可复制推广</li><li><i class="fas fa-check-circle"></i> 趣味化学习：闯关、打卡、手工、社群，从被动接受到主动探索</li><li><i class="fas fa-check-circle"></i> 普惠型服务：面向校园、社区免费开放，助力教育公平</li></ul></div>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;"><h3 style="color: var(--primary); margin-bottom: 20px;">核心团队</h3><div class="team-grid"><div class="team-card"><div class="avatar"><i class="fas fa-user-tie"></i></div><div class="name">李敏辉</div><div class="role">项目负责人</div></div><div class="team-card"><div class="avatar"><i class="fas fa-pen-fancy"></i></div><div class="name">邹绘霖</div><div class="role">内容运营</div></div><div class="team-card"><div class="avatar"><i class="fas fa-puzzle-piece"></i></div><div class="name">李启峰</div><div class="role">数学谜题设计</div></div><div class="team-card"><div class="avatar"><i class="fas fa-chart-bar"></i></div><div class="name">黎顺财</div><div class="role">数据分析</div></div><div class="team-card"><div class="avatar"><i class="fas fa-palette"></i></div><div class="name">李家锦</div><div class="role">视觉设计</div></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>数蕴文脉——传统文化中的数字智慧互动教育平台 | 以数学之眼，观文化之美</p>
+    </div>
+
+    <script>
+        // ========== 页面与游戏切换 ==========
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(`page-${pageName}`).classList.add('active');
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageName) link.classList.add('active');
+            });
+            document.querySelectorAll('.game-content').forEach(c => c.style.display = 'none');
+        }
+
+        function switchGame(gameName) {
+            document.querySelectorAll('.game-content').forEach(c => c.style.display = 'none');
+            const el = document.getElementById(`game-${gameName}`);
+            if (el) { el.style.display = 'block'; el.scrollIntoView({ behavior: 'smooth' }); }
+        }
+
+        // 节气轮盘
+        let isRotating = false, startAngle = 0, currentAngle = 0;
+        function startRotate(e) {
+            isRotating = true;
+            const wheel = document.getElementById('wheel');
+            const rect = wheel.getBoundingClientRect();
+            const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+            startAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI - currentAngle;
+            document.addEventListener('mousemove', rotateWheel);
+        }
+        function stopRotate() {
+            isRotating = false;
+            document.removeEventListener('mousemove', rotateWheel);
+            currentAngle = Math.round(currentAngle / 15) * 15;
+            document.getElementById('wheel').style.transform = `rotate(${currentAngle}deg)`;
+            document.getElementById('wheel-degree').textContent = `${currentAngle % 360}°`;
+        }
+        function rotateWheel(e) {
+            if (!isRotating) return;
+            const wheel = document.getElementById('wheel');
+            const rect = wheel.getBoundingClientRect();
+            const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+            const angle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+            currentAngle = angle - startAngle;
+            wheel.style.transform = `rotate(${currentAngle}deg)`;
+            document.getElementById('wheel-degree').textContent = `${Math.round(currentAngle) % 360}°`;
+        }
+
+        // 对仗匹配
+        document.querySelectorAll('.match-item').forEach(item => {
+            item.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', item.dataset.id); item.style.opacity = '0.5'; });
+            item.addEventListener('dragend', e => { item.style.opacity = '1'; });
+        });
+        document.querySelectorAll('.match-slot').forEach(slot => {
+            slot.addEventListener('dragover', e => e.preventDefault());
+            slot.addEventListener('drop', e => {
+                e.preventDefault();
+                const id = e.dataTransfer.getData('text/plain');
+                const words = {1:'一行',2:'白鹭',3:'上',4:'青天'};
+                slot.innerHTML = words[id] || '';
+                slot.classList.add('filled');
+                if (document.querySelectorAll('.match-slot.filled').length === 4) {
+                    const res = document.getElementById('match-result');
+                    res.style.display = 'block'; res.classList.add('correct');
+                }
+            });
+        });
+
+        // 营造比例尺
+        function calcScale() {
+            const base = +document.getElementById('base-material').value;
+            const ratio = +document.getElementById('beam-ratio').value;
+            const ans = +document.getElementById('beam-result').value;
+            const correct = base * ratio;
+            const el = document.getElementById('scale-result');
+            if (ans === correct) {
+                el.textContent = `正确！${base}×${ratio}=${correct}厘米`;
+                el.className = 'scale-result correct';
+            } else {
+                el.textContent = `错误！正确结果是${correct}厘米`;
+                el.className = 'scale-result wrong';
+            }
+        }
+        // ========== 黄金比例游戏 ==========
+        function updateGoldenRect() {
+            const slider = document.getElementById('goldenSlider');
+            const width = parseInt(slider.value);
+            const height = 200;
+            const ratio = width / height;
+            document.getElementById('sliderValue').textContent = '长边：' + width + 'px';
+            document.getElementById('goldenRatioDisplay').textContent = '当前比例：' + ratio.toFixed(3);
+            const feedback = document.getElementById('goldenFeedback');
+            const diff = Math.abs(ratio - 1.618);
+            if (diff < 0.02) {
+                feedback.textContent = '🎯 非常接近黄金比例！';
+                feedback.style.color = '#27ae60';
+            } else if (diff < 0.08) {
+                feedback.textContent = '接近黄金比例';
+                feedback.style.color = '#f39c12';
+            } else {
+                feedback.textContent = '距目标比例 1.618 还差一些';
+                feedback.style.color = '#c0392b';
+            }
+            drawGoldenRect(width);
+        }
+
+        function drawGoldenRect(width) {
+            const canvas = document.getElementById('goldenCanvas');
+            const ctx = canvas.getContext('2d');
+            const height = 200;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 用户矩形
+            ctx.fillStyle = 'rgba(192, 57, 43, 0.3)';
+            ctx.strokeStyle = '#c0392b';
+            ctx.lineWidth = 2;
+            const x = (canvas.width - width) / 2;
+            const y = (canvas.height - height) / 2;
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeRect(x, y, width, height);
+            // 目标黄金矩形（虚线）
+            const goldenWidth = 200 * 1.618;
+            const gx = (canvas.width - goldenWidth) / 2;
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([8, 4]);
+            ctx.strokeRect(gx, y, goldenWidth, height);
+            ctx.setLineDash([]);
+            // 标注
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '12px Inter, Microsoft YaHei, sans-serif';
+            ctx.fillText('你的矩形', x + 5, y + 18);
+            ctx.fillStyle = '#27ae60';
+            ctx.fillText('黄金矩形 (φ≈1.618)', gx + 5, y + 18);
+        }
+
+        function checkGoldenRatio() {
+            const slider = document.getElementById('goldenSlider');
+            const width = parseInt(slider.value);
+            const ratio = width / 200;
+            const diff = Math.abs(ratio - 1.618);
+            const result = document.getElementById('goldenResult');
+            result.style.display = 'block';
+            if (diff < 0.02) {
+                result.textContent = '🎉 完美！你已经掌握了黄金分割的奥秘！当前比例 = ' + ratio.toFixed(3);
+                result.style.background = 'rgba(39, 174, 96, 0.1)';
+                result.style.color = '#27ae60';
+            } else {
+                result.textContent = '还需调整，当前比例 = ' + ratio.toFixed(3) + '，目标比例 = 1.618，差值 = ' + diff.toFixed(3);
+                result.style.background = 'rgba(192, 57, 43, 0.1)';
+                result.style.color = '#c0392b';
+            }
+        }
+        // ========== 黄金分割多重弹窗 ==========
+        const goldImages = [
+            { src: 'golden1.png', title: '黄金分割在建筑中的应用（1/5）', desc: '古希腊帕特农神庙的立面，其宽高比精确地采用了黄金比例 φ≈1.618，使得整个建筑看起来极其和谐美观，成为后世建筑的典范。' },
+            { src: 'golden2.png', title: '黄金分割在建筑中的应用（2/5）', desc: '古埃及胡夫金字塔的斜面高度与底面半边长之比约为 φ，这一设计使得金字塔在视觉上显得格外稳定和庄严。' },
+            { src: 'golden3.png', title: '黄金分割在建筑中的应用（3/5）', desc: '中国故宫太和殿的高宽比约为 0.618（即宽高比 ≈ 1.618），体现了中国古代工匠对和谐比例的直觉把握。' },
+            { src: 'golden4.png', title: '黄金分割在建筑中的应用（4/5）', desc: '应县木塔各层高度递减呈现近似黄金分割的比例关系，使这座千年木塔获得了独特的视觉韵律。' },
+            { src: 'golden5.png', title: '黄金分割在建筑中的应用（5/5）', desc: '法国巴黎圣母院的正面比例同样暗含黄金分割，从大门到玫瑰窗的布局都体现了这一几何法则。' }
+        ];
+        let currentGoldIndex = 0;
+
+        function openGoldSequence() {
+            currentGoldIndex = 0;
+            updateGoldModal();
+            document.getElementById('goldSequenceModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGoldSequence() {
+            document.getElementById('goldSequenceModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateGoldModal() {
+            const data = goldImages[currentGoldIndex];
+            document.getElementById('goldSeqImage').src = data.src;
+            document.getElementById('goldSeqTitle').textContent = data.title;
+            document.getElementById('goldSeqDesc').textContent = data.desc;
+            document.getElementById('goldSeqCounter').textContent = (currentGoldIndex + 1) + ' / ' + goldImages.length;
+        }
+
+        function prevGoldImage() {
+            if (currentGoldIndex > 0) {
+                currentGoldIndex--;
+                updateGoldModal();
+            }
+        }
+
+        function nextGoldImage() {
+            if (currentGoldIndex < goldImages.length - 1) {
+                currentGoldIndex++;
+                updateGoldModal();
+            }
+        }
+
+               // 点击模态框背景关闭（延迟到DOM加载完成后绑定）
+        window.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('goldSequenceModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) closeGoldSequence();
+                });
+            }
+        });
+                        window.addEventListener('load', function() {
+            if (document.getElementById('goldenCanvas')) drawGoldenRect(200);
+        });
+        // ========== 知识库Tab ==========
+        function switchTab(tabName) {
+            document.querySelectorAll('#knowledgeTabs .tab-btn').forEach(b => b.classList.remove('active'));
+            const btn = document.querySelector(`#knowledgeTabs [data-tab="${tabName}"]`);
+            if (btn) btn.classList.add('active');
+            document.querySelectorAll('#page-knowledge .tab-content').forEach(div => div.classList.remove('active'));
+            const tab = document.getElementById('tab-' + tabName);
+            if (tab) tab.classList.add('active');
+        }
+        document.querySelectorAll('#knowledgeTabs .tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        // ========== 趣闯关系统 ==========
+        const quizData = {
+            poetry: [
+                { q: '“一去二三里”中，1到10的和是多少？', opts: ['55','50','45','60'], correct: 0, explain: '等差数列求和，1+2+…+10=55。' },
+                { q: '五言绝句可看作几行几列的矩阵？', opts: ['5行4列','4行5列','8行5列','3行7列'], correct: 1, explain: '4句×5字=20字矩形。' },
+                { q: '“两个黄鹂”与“一行白鹭”是什么数学关系？', opts: ['倍数','一一映射','分数','倒数'], correct: 1, explain: '对仗即双射，每个词唯一对应。' },
+                { q: '七律偶数句末字必须是什么声调？', opts: ['仄声','平声','上声','入声'], correct: 1, explain: '律诗偶数句押平声韵，形成音韵周期。' },
+                { q: '“欲穷千里目，更上一层楼”说明视野与高度什么关系？', opts: ['正相关','反相关','无关系','随机'], correct: 0, explain: '视线距离近似球面几何中的正相关。' }
+            ],
+            architecture: [
+                { q: '天坛圜丘坛最上层石板数象征什么？', opts: ['7','8','9','10'], correct: 2, explain: '9象征天，栏板台阶皆9的倍数。' },
+                { q: '紫禁城布局体现了哪种几何变换？', opts: ['平移','轴对称','旋转','缩放'], correct: 1, explain: '中轴线严格对称，彰显礼制。' },
+                { q: '赵州桥拱形接近什么曲线？', opts: ['抛物线','悬链线','椭圆','双曲线'], correct: 1, explain: '悬链线承压最优，早欧洲千年。' },
+                { q: '应县木塔层高变化最接近什么数列？', opts: ['等比','等差','斐波那契','随机'], correct: 1, explain: '层高等差递减，形成视觉韵律。' },
+                { q: '《营造法式》基本模数“材”约合多少厘米？', opts: ['10','15','18','20'], correct: 0, explain: '1材≈15厘米(宋)，模数化设计。' }
+            ],
+            craft: [
+                { q: '对折一次剪纸展开后得到什么对称？', opts: ['中心对称','轴对称','旋转对称','平移'], correct: 1, explain: '折痕为对称轴，折叠n次图案复制2^n。' },
+                { q: '瓷器拉坯利用了什么几何原理？', opts: ['球体','旋转体','棱柱','锥体'], correct: 1, explain: '绕轴旋转生成旋转体，截面皆同心圆。' },
+                { q: '中国结属于哪个数学分支？', opts: ['几何','拓扑学','概率论','数论'], correct: 1, explain: '绳结是三维空间闭合曲线，拓扑学研究。' },
+                { q: '云锦“算纬”相当于把图案分解为什么？', opts: ['像素点阵','文字编码','数列','波形'], correct: 0, explain: '高密度经纬构成像素矩阵，古代数字化。' },
+                { q: '风筝骨架对称保证飞行的什么性质？', opts: ['美观','平衡稳定','高度','速度'], correct: 1, explain: '对称结构使重心与升力中心重合。' }
+            ],
+            calendar: [
+                { q: '相邻节气太阳黄经相差多少度？', opts: ['10°','12°','15°','20°'], correct: 2, explain: '黄道360°÷24=15°，等差数列。' },
+                { q: '19年7闰法共多少朔望月？', opts: ['228','235','247','252'], correct: 1, explain: '19×12+7=235，近似回归年。' },
+                { q: '日晷刻度不均匀与什么函数有关？', opts: ['正弦','正切','指数','对数'], correct: 1, explain: '投影长度=晷针高度×tan(太阳高度角)。' },
+                { q: '岁差使春分点每年西移约多少角秒？', opts: ['10','30','50','100'], correct: 2, explain: '约50.29角秒，26000年一周。' },
+                { q: '二十八宿是将天球赤道分成多少份？', opts: ['12','24','28','36'], correct: 2, explain: '每宿约12.86°，古代天文坐标系。' }
+            ],
+            music: [
+                { q: '三分损一指弦长变为原来的多少？', opts: ['1/3','2/3','3/4','4/3'], correct: 1, explain: '去1/3得2/3，频率变3/2纯五度。' },
+                { q: '十二平均律相邻半音频比是多少？', opts: ['2^(1/12)','3/2','4/3','5/4'], correct: 0, explain: '朱载堉将八度等分12份，早西方50年。' },
+                { q: '古琴徽位按弦长什么比例划分？', opts: ['等分','黄金分割','简单有理数','随机'], correct: 2, explain: '1/2,1/3,1/4…对应泛音节点。' },
+                { q: '曾侯乙编钟每钟可发几个音？', opts: ['1','2','3','4'], correct: 1, explain: '合瓦形钟体可发正鼓音与侧鼓音。' },
+                { q: '五度相生法连续上生5次得哪五声？', opts: ['宫商角徵羽','宫商角变徵羽','宫商清角徵羽','宫商角徵闰'], correct: 0, explain: '宫→徵→商→羽→角，即五声音阶。' }
+            ],
+            mathclassic: [
+                { q: '《九章算术》矩形面积公式是？', opts: ['长+宽','长×宽','(长+宽)×2','长×宽÷2'], correct: 1, explain: '“广从相乘得积步”即面积。' },
+                { q: '“物不知数”最小正整数解是多少？', opts: ['17','23','28','35'], correct: 1, explain: 'x≡2(mod3),≡3(mod5),≡2(mod7) → 23。' },
+                { q: '赵爽弦图用了几个全等直角三角形？', opts: ['2','4','6','8'], correct: 1, explain: '4个三角形以斜边围成正方形，证明勾股。' },
+                { q: '刘徽割圆至多少边形得π≈3.1416？', opts: ['96','192','3072','6144'], correct: 2, explain: '3072边形，极限逼近，接近微积分。' },
+]
+        };
+
+        let currentQuizSet = 'poetry';
+        let quizScores = { poetry:0, architecture:0, craft:0, calendar:0, music:0, mathclassic:0 };
+        let answeredQuestions = new Set();
+
+        function renderQuiz(setId) {
+            const container = document.getElementById('challenge-' + setId);
+            if (!container) return;
+            const questions = quizData[setId];
+            let html = '';
+    const renderCount = setId === 'mathclassic' ? 4 : questions.length;
+                for (let i = 0; i < renderCount; i++) {
+        const q = questions[i];
+                const qKey = `${setId}-${i}`;
+                const isAnswered = answeredQuestions.has(qKey);
+                html += `<div class="challenge-card" id="q-${qKey}"><div class="quiz-number">Q${i+1}</div><h3>${q.q}</h3><div class="options">${q.opts.map((opt, j) => {
+                    let cls = 'option';
+                    if (isAnswered) { cls += j === q.correct ? ' correct' : ' wrong'; }
+                    return `<div class="${cls}" onclick="checkAnswer('${setId}',${i},${j})" ${isAnswered ? 'style="pointer-events:none;"' : ''}>${opt}</div>`;
+                }).join('')}</div>${isAnswered ? `<p style="font-size:13px;color:var(--text-secondary);margin-top:10px;">💡 ${q.explain}</p>` : ''}</div>`;
+            };
+            container.innerHTML = html;
+if (setId === 'mathclassic') { document.getElementById('game-quadratics').style.display = 'block'; }
+        }
+
+        function switchChallengeTab(setId) {
+            currentQuizSet = setId;
+            document.querySelectorAll('#challengeTabs .tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`#challengeTabs [data-ctab="${setId}"]`).classList.add('active');
+            document.querySelectorAll('#page-challenge .tab-content').forEach(d => d.classList.remove('active'));
+            document.getElementById('ctab-' + setId).classList.add('active');
+            document.getElementById('scoreDisplay').textContent = quizScores[setId];
+            renderQuiz(setId);
+    if (setId === 'mathclassic') initGame();
+        }
+    
+        function checkAnswer(setId, qIndex, optIndex) {
+            if (setId !== currentQuizSet) return;
+            const qKey = `${setId}-${qIndex}`;
+            if (answeredQuestions.has(qKey)) return;
+            answeredQuestions.add(qKey);
+            const card = document.getElementById(`q-${qKey}`);
+            const options = card.querySelectorAll('.option');
+            const question = quizData[setId][qIndex];
+            options.forEach((opt, j) => {
+                opt.style.pointerEvents = 'none';
+                if (j === question.correct) opt.classList.add('correct');
+                else if (j === optIndex && j !== question.correct) opt.classList.add('wrong');
+            });
+            if (optIndex === question.correct) quizScores[setId] += 10;
+            document.getElementById('scoreDisplay').textContent = quizScores[setId];
+            const exp = document.createElement('p');
+            exp.style = 'font-size:13px;color:var(--text-secondary);margin-top:10px;';
+            exp.textContent = '💡 ' + question.explain;
+            card.appendChild(exp);
+        }
+
+        function resetQuiz() {
+            const setId = currentQuizSet;
+            quizData[setId].forEach((_, i) => answeredQuestions.delete(`${setId}-${i}`));
+    if (setId === 'mathclassic') answeredQuestions.delete('mathclassic-game');
+            quizScores[setId] = 0;
+            document.getElementById('scoreDisplay').textContent = '0';
+            renderQuiz(setId);    
+if (setId === 'mathclassic') initGame();
+        }
+// ==================== 算筹开方术游戏逻辑 ====================
+let gameState = { equation: { a: 1, b: 0, c: 0, root: 0 }, step: 0, gameScore: 0 };
+
+function generateEquation() {
+    const root = Math.floor(Math.random() * 8) + 2;
+    const b = Math.floor(Math.random() * 6) + 2;
+    const c = root * root + b * root;
+    gameState.equation = { a: 1, b: b, c: c, root: root };
+    gameState.step = 0;
+    gameState.gameScore = 0;
+    document.getElementById('solution-input').value = '';
+    document.getElementById('solution-feedback').textContent = '';
+    document.getElementById('geometry-feedback').textContent = '';
+    document.getElementById('answer-area').style.display = 'none';
+    document.getElementById('btn-verify').style.display = 'none';
+    document.getElementById('btn-split').disabled = false;
+    document.getElementById('btn-complete').disabled = false;
+    renderGeometry();
+    renderAlgebra();
+}
+
+function renderGeometry() {
+    const area = document.getElementById('geometry-area');
+    const eq = gameState.equation;
+    const scale = 150 / (eq.root + eq.b / 2 + 2);
+    const x = eq.root * scale;
+    const halfB = (eq.b / 2) * scale;
+    area.innerHTML = `
+        <div style="position:absolute;left:40px;top:40px;width:${x}px;height:${x}px;background:rgba(192,57,43,0.2);border:2px solid #c0392b;">
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:600;">X²</span>
+        </div>
+        <div style="position:absolute;left:${40+x}px;top:40px;width:${halfB}px;height:${x}px;background:rgba(41,128,185,0.2);border:2px solid #2980b9;">
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;">(b/2)X</span>
+        </div>
+        <div style="position:absolute;left:40px;top:${40+x}px;width:${x}px;height:${halfB}px;background:rgba(41,128,185,0.2);border:2px solid #2980b9;">
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;">(b/2)X</span>
+        </div>
+        <div id="rect-corner" style="position:absolute;left:${40+x}px;top:${40+x}px;width:${halfB}px;height:${halfB}px;background:rgba(39,174,96,0.3);border:2px solid #27ae60;display:${gameState.step>=2?'block':'none'};">
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;">(b/2)²</span>
+        </div>
+        <span style="position:absolute;left:40px;top:${40+x+halfB+15}px;font-size:11px;color:#5a6c7d;">常数 C = ${eq.c}</span>
+    `;
+}
+
+function renderAlgebra() {
+    const eq = gameState.equation;
+    const steps = document.getElementById('algebra-steps');
+    let html = `<p><strong>原方程：</strong>x² + ${eq.b}x = ${eq.c}</p>`;
+    if (gameState.step >= 1) {
+        html += `<p style="color:#2980b9;">① 配方：x² + ${eq.b}x + (${eq.b}/2)² = ${eq.c} + (${eq.b}/2)²</p>`;
+    }
+    if (gameState.step >= 2) {
+        const ps = eq.root + eq.b/2;
+        html += `<p style="color:#27ae60;">② 完全平方：(x + ${eq.b/2})² = ${ps*ps}</p>`;
+    }
+    if (gameState.step >= 3) {
+        html += `<p style="color:#c0392b;">③ 开方：x = ${eq.root}（正根）</p>`;
+    }
+    steps.innerHTML = html;
+}
+
+function splitRectangle() {
+    if (gameState.step !== 0) return;
+    gameState.step = 1;
+    document.getElementById('geometry-feedback').textContent = '✅ 已分割矩形，点击下一步补全正方形';
+    document.getElementById('btn-split').disabled = true;
+    renderAlgebra();
+}
+
+function completeSquare() {
+    if (gameState.step !== 1) return;
+    gameState.step = 2;
+    document.getElementById('geometry-feedback').textContent = '✅ 已补全正方形，请输入正根验证';
+    document.getElementById('btn-complete').disabled = true;
+    document.getElementById('btn-verify').style.display = 'inline-block';
+    document.getElementById('answer-area').style.display = 'block';
+    renderGeometry();
+    renderAlgebra();
+}
+
+function verifySolution() {
+    document.getElementById('answer-area').style.display = 'block';
+}
+
+function checkSolution() {
+    const input = parseInt(document.getElementById('solution-input').value);
+    const eq = gameState.equation;
+    if (input === eq.root) {
+        gameState.step = 3;
+        gameState.gameScore = 10;
+        document.getElementById('solution-feedback').textContent = '🎉 正确！获得10分！';
+        document.getElementById('solution-feedback').style.color = '#27ae60';
+        document.getElementById('btn-verify').style.display = 'none';
+        renderAlgebra();
+        if (!answeredQuestions.has('mathclassic-game')) {
+            answeredQuestions.add('mathclassic-game');
+            quizScores.mathclassic += 10;
+            document.getElementById('scoreDisplay').textContent = quizScores.mathclassic;
+        }
+    } else {
+        document.getElementById('solution-feedback').textContent = '❌ 不对，看看右边配方法的正根是多少？';
+        document.getElementById('solution-feedback').style.color = '#c0392b';
+    }
+}
+
+function initGame() { generateEquation(); }
+
+        function getRandomTab() {
+            const tabs = ['poetry','architecture','craft','calendar','music','mathclassic'];
+            return tabs.filter(t => t !== currentQuizSet)[Math.floor(Math.random()*5)];
+        }
+
+        document.querySelectorAll('#challengeTabs .tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchChallengeTab(btn.dataset.ctab));
+        });
+
+                // 初始化
+        switchChallengeTab('poetry');
+        document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => switchPage(link.dataset.page)));
+    </script>
+
+    <!-- 图片弹窗 -->
+    <div id="imageModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; backdrop-filter: blur(8px);">
+        <div style="background: white; margin: auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 600px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+            <span onclick="closeImageModal()" style="position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa;">&times;</span>
+            <img id="modalImage" src="" alt="" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; margin-bottom: 20px;">
+            <h3 id="modalTitle" style="font-size: 22px; color: #2c3e50; margin-bottom: 15px;"></h3>
+            <p id="modalDesc" style="color: #5a6c7d; font-size: 15px; line-height: 1.8;"></p>
+        </div>
+    </div>
+
+    <script>
+        function openImageModal(imgSrc, title, desc) {
+            document.getElementById('modalImage').src = imgSrc;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('imageModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) closeImageModal();
+        });
+    </script>
+    <!-- 视频弹窗 -->
+    <div id="videoModal" style="display: none; position: fixed; z-index: 2001; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(8px);">
+        <div style="background: white; margin: auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 800px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+            <span onclick="closeVideoModal()" style="position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa; transition: all 0.2s;" onmouseover="this.style.color='#c0392b'" onmouseout="this.style.color='#aaa'">&times;</span>
+            <h3 id="videoModalTitle" style="font-size: 22px; color: #2c3e50; margin-bottom: 15px;"></h3>
+            <video id="modalVideo" controls style="width: 100%; border-radius: 12px; aspect-ratio: 16/9;">
+                您的浏览器不支持视频播放。
+            </video>
+            <p id="videoModalDesc" style="color: #5a6c7d; font-size: 14px; margin-top: 10px;"></p>
+        </div>
+    </div>
+
+    <script>
+        function openVideoModal(videoSrc, title, desc) {
+            // 暂停并重置之前可能正在播放的视频
+            var modalVideo = document.getElementById('modalVideo');
+            modalVideo.pause();
+            modalVideo.innerHTML = ''; // 清除旧的source
+
+            var source = document.createElement('source');
+            source.src = videoSrc;
+            source.type = 'video/mp4';
+            modalVideo.appendChild(source);
+            modalVideo.load(); // 重新加载视频
+
+            document.getElementById('videoModalTitle').textContent = title;
+            document.getElementById('videoModalDesc').textContent = desc;
+            document.getElementById('videoModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            var modalVideo = document.getElementById('modalVideo');
+            modalVideo.pause();
+            document.getElementById('videoModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeVideoModal();
+        });
+    </script>
+<script>
+// ========== 工坊游戏跳转控制 ==========
+
+// 1. 七巧板游戏初始化函数（封装版，会往指定容器里动态生成整个游戏界面）
+function initTangramGame(containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = `
+    <style>
+        #tangram-game-local {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: var(--card-bg-solid, #fff);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            font-family: var(--font-sans, sans-serif);
+            position: relative;
+        }
+        #tangram-canvas-local {
+            border: 2px solid #e0d6c8;
+            border-radius: 12px;
+            background: #faf8f4;
+            cursor: grab;
+            touch-action: none;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
+        }
+        #tangram-canvas-local:active { cursor: grabbing; }
+        .tangram-ctrl button {
+            padding: 8px 14px;
+            margin: 4px;
+            border: 1px solid var(--primary, #2c3e50);
+            background: white;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--primary, #2c3e50);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .tangram-ctrl button:hover {
+            background: #fdecea;
+            border-color: #c0392b;
+            color: #c0392b;
+            transform: translateY(-2px);
+        }
+        .tangram-poem-local {
+            font-style: italic;
+            color: #c0392b;
+            text-align: center;
+            padding: 10px;
+            background: #fdecea;
+            border-radius: 12px;
+            font-size: 14px;
+            white-space: pre-line;
+            transition: 0.3s;
+        }
+    </style>
+    <div id="tangram-game-local">
+        <canvas id="tangram-canvas-local" width="450" height="450"></canvas>
+        <div class="tangram-ctrl">
+            <div class="tangram-poem-local" id="tangram-poem-local">加载中...</div>
+            <button id="btn-rotate">↻ 旋转45°</button>
+            <button id="btn-flip">↔ 翻转（平行四边形）</button>
+            <button id="btn-reset">↺ 重置本关</button>
+            <button id="btn-next">▶ 下一关</button>
+            <p style="font-size:12px; color:#5a6c7d;">拖拽板块移动，双击旋转<br>全部拼入轮廓即过关</p>
+            <p style="font-size:13px;">关卡 <span id="level-num-local">1</span>/3</p>
+        </div>
+    </div>`;
+
+    // 游戏逻辑自执行
+    (function() {
+        const SQRT2 = Math.sqrt(2);
+        const pieceDefs = {
+            bigTriangle1: { type: 'triangle', size: 80, color: '#e74c3c', gradFrom: '#f1948a', gradTo: '#e74c3c' },
+            bigTriangle2: { type: 'triangle', size: 80, color: '#e67e22', gradFrom: '#f5b041', gradTo: '#e67e22' },
+            mediumTriangle: { type: 'triangle', size: 56.57, color: '#f1c40f', gradFrom: '#f7dc6f', gradTo: '#f1c40f' },
+            smallTriangle1: { type: 'triangle', size: 40, color: '#2ecc71', gradFrom: '#58d68d', gradTo: '#2ecc71' },
+            smallTriangle2: { type: 'triangle', size: 40, color: '#3498db', gradFrom: '#5dade2', gradTo: '#3498db' },
+            square: { type: 'square', size: 56.57, color: '#9b59b6', gradFrom: '#af7ac5', gradTo: '#9b59b6' },
+            parallelogram: { type: 'parallelogram', size: 40, color: '#1abc9c', gradFrom: '#48c9b0', gradTo: '#1abc9c' }
+        };
+        function randomPos() {
+            return { x: 350 + Math.random() * 60, y: 50 + Math.random() * 350, angle: Math.floor(Math.random() * 8) * 45, flip: 1 };
+        }
+        // 新诗词关卡
+        const levels = [
+            { poem: '方宅十余亩，\n草屋八九间。',
+              target: { bigTriangle1:{x:160,y:280,angle:0,flip:1}, bigTriangle2:{x:290,y:280,angle:0,flip:1}, mediumTriangle:{x:225,y:160,angle:0,flip:1}, smallTriangle1:{x:140,y:200,angle:0,flip:1}, smallTriangle2:{x:310,y:200,angle:0,flip:1}, square:{x:225,y:240,angle:45,flip:1}, parallelogram:{x:225,y:330,angle:0,flip:1} } },
+            { poem: '鹅鹅鹅，\n曲项向天歌。',
+              target: { bigTriangle1:{x:160,y:250,angle:45,flip:1}, bigTriangle2:{x:280,y:250,angle:135,flip:1}, mediumTriangle:{x:220,y:140,angle:90,flip:1}, smallTriangle1:{x:100,y:320,angle:-45,flip:1}, smallTriangle2:{x:340,y:320,angle:45,flip:1}, square:{x:220,y:210,angle:0,flip:1}, parallelogram:{x:220,y:350,angle:90,flip:-1} } },
+            { poem: '鱼戏莲叶东，\n鱼戏莲叶西。',
+              target: { bigTriangle1:{x:120,y:220,angle:-45,flip:1}, bigTriangle2:{x:320,y:220,angle:135,flip:1}, mediumTriangle:{x:220,y:140,angle:0,flip:1}, smallTriangle1:{x:160,y:300,angle:45,flip:1}, smallTriangle2:{x:280,y:300,angle:-45,flip:1}, square:{x:220,y:220,angle:45,flip:1}, parallelogram:{x:220,y:350,angle:0,flip:-1} } }
+        ];
+        let currentLevel = 0;
+        let pieces = {};
+        let selectedPiece = null, dragOffset = {x:0,y:0};
+        const canvas = document.getElementById('tangram-canvas-local');
+        const ctx = canvas.getContext('2d');
+
+        // 粒子系统
+        let particles = [];
+        function Particle(x, y) {
+            this.x = x;
+            this.y = y;
+            this.vx = (Math.random() - 0.5) * 4;
+            this.vy = (Math.random() - 0.5) * 4 - 2;
+            this.size = Math.random() * 4 + 2;
+            this.life = 1.0;
+            this.color = `hsl(${Math.random() * 60 + 30}, 80%, 60%)`;
+        }
+        Particle.prototype.update = function() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.1;
+            this.life -= 0.02;
+        };
+        Particle.prototype.draw = function(ctx) {
+            ctx.globalAlpha = this.life;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        };
+        function emitParticles(x, y, count = 20) {
+            for (let i=0; i<count; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+        function updateParticles() {
+            particles = particles.filter(p => p.life > 0);
+            particles.forEach(p => p.update());
+        }
+        function drawParticles() {
+            particles.forEach(p => p.draw(ctx));
+        }
+
+        function initPieces() { for(let k in pieceDefs) pieces[k] = randomPos(); }
+
+        function drawPiece(ctx, def, center, angle, flip, selected = false, golden = false) {
+            ctx.save();
+            ctx.translate(center.x, center.y);
+            ctx.rotate(angle*Math.PI/180);
+            ctx.scale(1, flip);
+
+            // 阴影效果
+            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+            ctx.shadowBlur = selected ? 15 : 8;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+
+            ctx.beginPath();
+            let pts;
+            if(def.type === 'triangle') {
+                const s = def.size;
+                pts = [[-s/2, s/2], [s/2, s/2], [0, -s/2]];
+            } else if(def.type === 'square') {
+                const s = def.size / SQRT2;
+                pts = [[-s/2, -s/2], [s/2, -s/2], [s/2, s/2], [-s/2, s/2]];
+            } else {
+                const h = def.size, w = h * SQRT2;
+                pts = [[-w/2, h/2], [0, -h/2], [w/2, -h/2], [0, h/2]];
+            }
+            ctx.moveTo(pts[0][0], pts[0][1]);
+            for (let i=1; i<pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+            ctx.closePath();
+
+            // 渐变色填充
+            let gradient;
+            if (pts.length === 3) {
+                gradient = ctx.createLinearGradient(pts[0][0], pts[0][1], pts[2][0], pts[2][1]);
+            } else {
+                gradient = ctx.createLinearGradient(-def.size/2, -def.size/2, def.size/2, def.size/2);
+            }
+            gradient.addColorStop(0, def.gradFrom);
+            gradient.addColorStop(1, def.gradTo);
+            ctx.fillStyle = gradient;
+
+            if (golden) {
+                ctx.strokeStyle = '#f1c40f';
+                ctx.lineWidth = 4;
+                ctx.shadowColor = 'rgba(241,196,15,0.8)';
+                ctx.shadowBlur = 20;
+            } else {
+                ctx.strokeStyle = '#3e2723';
+                ctx.lineWidth = 2;
+            }
+            ctx.fill();
+            ctx.stroke();
+
+            // 高光效果
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.restore();
+        }
+
+        let winTriggered = false;
+        function draw() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            const level = levels[currentLevel];
+            
+            // 绘制目标轮廓
+            ctx.globalAlpha = 0.15;
+            ctx.strokeStyle = '#5a3e2b';
+            ctx.lineWidth = 2;
+            for(let k in level.target) {
+                const def = pieceDefs[k];
+                const tgt = level.target[k];
+                drawPiece(ctx, def, tgt, tgt.angle, tgt.flip);
+            }
+            ctx.globalAlpha = 1;
+            
+            // 绘制板块
+            for(let k in pieces) {
+                const def = pieceDefs[k];
+                const pos = pieces[k];
+                const isSelected = (selectedPiece === k);
+                const isWin = checkWinState(); // 仅用于金色边框
+                drawPiece(ctx, def, pos, pos.angle, pos.flip, isSelected, isWin);
+            }
+
+            // 粒子效果
+            updateParticles();
+            drawParticles();
+
+            if (!winTriggered && checkWinState()) {
+                winTriggered = true;
+                const poemEl = document.getElementById('tangram-poem-local');
+                poemEl.innerText = level.poem;
+                poemEl.style.background = '#eafaf1';
+                poemEl.style.transform = 'scale(1.05)';
+                setTimeout(()=>{ poemEl.style.transform = 'scale(1)'; }, 300);
+                // 在画布中心发射粒子
+                emitParticles(225, 225, 40);
+                setTimeout(() => {
+                    if (currentLevel < levels.length - 1) {
+                        alert('恭喜拼出！点击“下一关”继续。');
+                    } else {
+                        alert('太棒了！你已完成所有关卡！');
+                    }
+                }, 200);
+            } else if (!checkWinState()) {
+                winTriggered = false;
+            }
+        }
+
+        function checkWinState() {
+            const level = levels[currentLevel];
+            for(let k in level.target) {
+                const t = level.target[k], p = pieces[k];
+                if(Math.hypot(p.x-t.x, p.y-t.y) > 15 || Math.abs((p.angle%360)-(t.angle%360)) > 5 || p.flip !== t.flip) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const sx = canvas.width / rect.width, sy = canvas.height / rect.height;
+            const cx = e.touches ? e.touches[0].clientX : e.clientX;
+            const cy = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: (cx - rect.left) * sx, y: (cy - rect.top) * sy };
+        }
+
+        canvas.addEventListener('mousedown', e => {
+            e.preventDefault();
+            const p = getPos(e);
+            for (let k in pieces) {
+                const pp = pieces[k];
+                if (Math.hypot(p.x - pp.x, p.y - pp.y) < 40) {
+                    selectedPiece = k;
+                    dragOffset = { x: pp.x - p.x, y: pp.y - p.y };
+                    draw();
+                    return;
+                }
+            }
+        });
+        canvas.addEventListener('mousemove', e => {
+            if (!selectedPiece) return;
+            e.preventDefault();
+            const p = getPos(e);
+            pieces[selectedPiece].x = p.x + dragOffset.x;
+            pieces[selectedPiece].y = p.y + dragOffset.y;
+            draw();
+        });
+        canvas.addEventListener('mouseup', () => { selectedPiece = null; draw(); });
+        canvas.addEventListener('dblclick', e => {
+            const p = getPos(e);
+            for (let k in pieces) {
+                if (Math.hypot(p.x - pieces[k].x, p.y - pieces[k].y) < 40) {
+                    pieces[k].angle = (pieces[k].angle + 45) % 360;
+                    draw();
+                    return;
+                }
+            }
+        });
+        canvas.addEventListener('touchstart', e => {
+            e.preventDefault();
+            const p = getPos(e);
+            for (let k in pieces) {
+                const pp = pieces[k];
+                if (Math.hypot(p.x - pp.x, p.y - pp.y) < 40) {
+                    selectedPiece = k;
+                    dragOffset = { x: pp.x - p.x, y: pp.y - p.y };
+                    draw();
+                    return;
+                }
+            }
+        });
+        canvas.addEventListener('touchmove', e => {
+            if (!selectedPiece) return;
+            e.preventDefault();
+            const p = getPos(e);
+            pieces[selectedPiece].x = p.x + dragOffset.x;
+            pieces[selectedPiece].y = p.y + dragOffset.y;
+            draw();
+        });
+        canvas.addEventListener('touchend', () => { selectedPiece = null; draw(); });
+
+        // 控制按钮
+        document.getElementById('btn-rotate').onclick = () => {
+            if (selectedPiece) {
+                pieces[selectedPiece].angle = (pieces[selectedPiece].angle + 45) % 360;
+                draw();
+            } else alert('请先单击要旋转的板块');
+        };
+        document.getElementById('btn-flip').onclick = () => {
+            if (selectedPiece && pieceDefs[selectedPiece].type === 'parallelogram') {
+                pieces[selectedPiece].flip *= -1;
+                draw();
+            } else if (selectedPiece) {
+                alert('只有平行四边形可以翻转');
+            } else {
+                alert('请先选中板块（单击板块即可）');
+            }
+        };
+        document.getElementById('btn-reset').onclick = () => {
+            for (let k in pieces) pieces[k] = randomPos();
+            const poemEl = document.getElementById('tangram-poem-local');
+            poemEl.style.background = '#fdecea';
+            poemEl.innerText = levels[currentLevel].poem;
+            poemEl.style.transform = 'scale(1)';
+            particles = [];
+            winTriggered = false;
+            draw();
+        };
+        document.getElementById('btn-next').onclick = () => {
+            currentLevel = (currentLevel + 1) % 3;
+            document.getElementById('level-num-local').innerText = currentLevel + 1;
+            const poemEl = document.getElementById('tangram-poem-local');
+            poemEl.style.background = '#fdecea';
+            poemEl.innerText = levels[currentLevel].poem;
+            poemEl.style.transform = 'scale(1)';
+            for (let k in pieces) pieces[k] = randomPos();
+            particles = [];
+            winTriggered = false;
+            draw();
+        };
+
+        initPieces();
+        document.getElementById('tangram-poem-local').innerText = levels[0].poem;
+        document.getElementById('level-num-local').innerText = 1;
+
+        // 动画循环
+        function animate() {
+            draw();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+}
+// 2. 进入全屏游戏
+function startWorkshopGame() {
+    document.querySelector('#page-workshop .workshop-grid').style.display = 'none';
+    document.getElementById('workshop-game-area').style.display = 'block';
+    initTangramGame('workshop-game-inner');
+    document.getElementById('workshop-game-area').scrollIntoView({ behavior: 'smooth' });
+}
+
+// 3. 退出全屏游戏
+function closeWorkshopGame() {
+    document.getElementById('workshop-game-area').style.display = 'none';
+    document.querySelector('#page-workshop .workshop-grid').style.display = 'grid';
+    document.getElementById('workshop-game-inner').innerHTML = '';
+}
+</script>
+    <!-- 黄金分割多重图片弹窗 -->
+    <div id="goldSequenceModal" style="display: none; position: fixed; z-index: 2002; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; backdrop-filter: blur(8px);">
+        <div style="background: white; margin: auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 700px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+            <span onclick="closeGoldSequence()" style="position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa;">&times;</span>
+            <h3 id="goldSeqTitle" style="font-size: 22px; color: #2c3e50; margin-bottom: 15px;"></h3>
+            <img id="goldSeqImage" src="" alt="" style="width: 100%; max-height: 450px; object-fit: contain; border-radius: 12px; margin-bottom: 15px;">
+            <p id="goldSeqDesc" style="color: #5a6c7d; font-size: 15px; line-height: 1.8; margin-bottom: 20px;"></p>
+            <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
+                <button onclick="prevGoldImage()" style="padding: 10px 25px; border: 1px solid var(--primary); background: white; border-radius: 25px; cursor: pointer; font-weight: 500; color: var(--primary);">◀ 上一张</button>
+                <span id="goldSeqCounter" style="font-size: 16px; color: var(--text-secondary);">1 / 5</span>
+                <button onclick="nextGoldImage()" style="padding: 10px 25px; border: 1px solid var(--primary); background: white; border-radius: 25px; cursor: pointer; font-weight: 500; color: var(--primary);">下一张 ▶</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
