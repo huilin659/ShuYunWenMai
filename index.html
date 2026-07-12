@@ -859,6 +859,33 @@
                 gap: 20px;
             }
         }
+    /* ===== 刘徽 · 农田丈量 游戏样式 ===== */
+.option-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--primary);
+    border-radius: 25px;
+    background: white;
+    color: var(--primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    text-align: left;
+}
+.option-btn:hover:not(:disabled) {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+}
+.option-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+#field-feedback {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+}
     </style>
 </head>
 <body>
@@ -1157,6 +1184,13 @@
                 <div id="game-architecture-scale" class="game-content" style="display: none;">
                     <div class="game-container"><div class="game-title"><i class="fas fa-ruler"></i> 营造比例尺计算</div><div class="game-tips">提示：《营造法式》中「材」为基准模数（1材=15分=18厘米），请根据比例计算构件实际尺寸！</div><div class="scale-calculator"><div class="scale-item"><label>基准「材」的尺寸（厘米）：</label><input type="number" id="base-material" placeholder="输入18（固定值）" value="18"></div><div class="scale-item"><label>梁高比例（材）：</label><input type="number" id="beam-ratio" placeholder="输入4（固定值）" value="4"></div><div class="scale-item"><label>计算结果：梁高（厘米）=</label><input type="number" id="beam-result" placeholder="请输入计算结果（18×4）"></div><button class="btn-white" style="width: 100%; margin-top: 10px;" onclick="calcScale()">验证答案</button><div id="scale-result" class="scale-result">结果提示</div></div></div>
                 </div>
+                 <div class="game-card" onclick="switchGame('liuhui-field')" style="border-left-color: var(--mathclassic);">
+        <span class="game-tag mathclassic">经典算学</span>
+        <h3>刘徽 · 农田丈量</h3>
+        <div class="math-core">数学核心：割补法、面积计算</div>
+        <div class="play-desc">扮演刘徽，用割补法计算不规则田地面积，体验古代数学的实用智慧。</div>
+    </div>
+</div>
                 <div id="game-golden-ratio" class="game-content" style="display: none;">
                     <div class="game-container">
                         <div class="game-title"><i class="fas fa-grip-lines"></i> 黄金比例探索</div>
@@ -1183,6 +1217,43 @@
                 </div>
             </div>
         </div>
+    <!-- 刘徽 · 农田丈量 -->
+<div id="game-liuhui-field" class="game-content" style="display: none;">
+    <div class="game-container">
+        <div class="game-title"><i class="fas fa-draw-polygon"></i> 刘徽 · 农田丈量</div>
+        <div id="liuhui-story" style="background: #fdf8f4; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--accent);">
+            <p style="font-size: 16px; line-height: 1.8; margin: 0;">
+                <i class="fas fa-quote-left" style="color: var(--accent); margin-right: 8px;"></i>
+                你，<strong>刘徽</strong>，在乡间遇到一位老农。他有一块 L 形的田地，想计算面积。
+                老农说：“左边矩形长 6 步、宽 3 步；下边矩形长 4 步、宽 2 步。请先生帮我算算总面积吧！”
+            </p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: center;">
+            <div>
+                <canvas id="fieldCanvas" width="400" height="300" style="border: 2px solid #d5c8b8; border-radius: 12px; background: #f7f2eb; box-shadow: 0 4px 12px rgba(0,0,0,0.05);"></canvas>
+                <p style="text-align: center; font-size: 14px; color: var(--text-secondary); margin-top: 8px;">📐 L 形田地示意图（单位：步）</p>
+            </div>
+            <div style="min-width: 200px;">
+                <p style="font-weight: 600; color: var(--primary);">总面积 = ？</p>
+                <div id="field-options" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                    <button class="option-btn" data-value="20">A. 20 平方步</button>
+                    <button class="option-btn" data-value="26">B. 26 平方步</button>
+                    <button class="option-btn" data-value="28">C. 28 平方步</button>
+                    <button class="option-btn" data-value="32">D. 32 平方步</button>
+                </div>
+                <div id="field-feedback" style="margin-top: 15px; padding: 12px; border-radius: 8px; display: none;"></div>
+                <button id="field-next" style="margin-top: 15px; padding: 8px 24px; background: var(--accent); color: white; border: none; border-radius: 25px; cursor: pointer; display: none;">继续探索 →</button>
+            </div>
+        </div>
+
+        <div id="gebu-card" style="display: none; margin-top: 30px; padding: 20px; background: #eafaf1; border-radius: 12px; border-left: 5px solid var(--mathclassic);">
+            <h4 style="color: var(--mathclassic);"><i class="fas fa-lightbulb"></i> 割补法 · 数学智慧</h4>
+            <p style="font-size: 15px; line-height: 1.8;">刘徽在《九章算术注》中提出 <strong>“割补法”</strong>：将不规则图形切割成若干规则图形（如矩形、三角形），分别计算面积再相加。这种方法至今仍在几何学中广泛使用。</p>
+            <p style="font-size: 14px; color: var(--text-secondary); margin-top: 10px;">✅ 你已掌握割补法！可以继续下一关。</p>
+        </div>
+    </div>
+</div>
 
         <!-- 关于我们 -->
         <div id="page-about" class="page">
