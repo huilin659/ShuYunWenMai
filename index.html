@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数蕴文脉 · 传统文化中的数字智慧互动教育平台</title>
-    <脚本 src="https://cdn.plot.ly/plotly-latest.min.js"></脚本>
-   <链接 rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<链接 href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2c3e50;
@@ -39,9 +39,9 @@
         }
 
         * {
-            边距: 0;
-            内边距: 0;
-            盒模型: border-box;
+            margin: 0;
+            padding: 0;
+           box-sizing: border-box;
         }
 
         body {
@@ -2182,6 +2182,126 @@ function closeWorkshopGame() {
     document.querySelector('#page-workshop .workshop-grid').style.display = 'grid';
     document.getElementById('workshop-game-inner').innerHTML = '';
 }
+    // ========== 刘徽 · 农田丈量 ==========
+let liuhuiSolved = false;
+
+function drawField() {
+    const canvas = document.getElementById('fieldCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = 400, h = 300;
+    ctx.clearRect(0, 0, w, h);
+
+    // 绘制背景网格
+    ctx.strokeStyle = '#e0d6c8';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x <= w; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+    }
+    for (let y = 0; y <= h; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+    }
+
+    // 绘制 L 形田地
+    const x1 = 60, y1 = 30, w1 = 120, h1 = 180;
+    const x2 = 180, y2 = 150, w2 = 160, h2 = 60;
+
+    ctx.fillStyle = 'rgba(192, 57, 43, 0.2)';
+    ctx.fillRect(x1, y1, w1, h1);
+    ctx.fillRect(x2, y2, w2, h2);
+
+    ctx.strokeStyle = '#2c3e50';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x1, y1, w1, h1);
+    ctx.strokeRect(x2, y2, w2, h2);
+
+    ctx.fillStyle = '#2c3e50';
+    ctx.font = '16px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('6步', x1 + w1/2, y1 - 6);
+    ctx.textBaseline = 'middle';
+    ctx.fillText('3步', x1 - 20, y1 + h1/2);
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('4步', x2 + w2/2, y2 - 6);
+    ctx.textBaseline = 'middle';
+    ctx.fillText('2步', x2 - 20, y2 + h2/2);
+
+    if (liuhuiSolved) {
+        ctx.fillStyle = 'rgba(39, 174, 96, 0.3)';
+        ctx.fillRect(x1, y1, w1, h1);
+        ctx.fillRect(x2, y2, w2, h2);
+        ctx.strokeStyle = '#27ae60';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(x1, y1, w1, h1);
+        ctx.strokeRect(x2, y2, w2, h2);
+
+        ctx.fillStyle = '#27ae60';
+        ctx.font = 'bold 18px Inter, sans-serif';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('18平方步', x1 + w1/2, y1 + h1/2 - 20);
+        ctx.fillText('8平方步', x2 + w2/2, y2 + h2/2 - 20);
+        ctx.fillStyle = '#c0392b';
+        ctx.font = 'bold 20px Inter, sans-serif';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('总面积 = 26平方步', 200, 280);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const options = document.querySelectorAll('#field-options .option-btn');
+    const feedback = document.getElementById('field-feedback');
+    const nextBtn = document.getElementById('field-next');
+    const gebuCard = document.getElementById('gebu-card');
+
+    options.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (liuhuiSolved) return;
+            const val = parseInt(this.dataset.value);
+            const correct = 26;
+
+            options.forEach(b => b.disabled = true);
+            feedback.style.display = 'block';
+
+            if (val === correct) {
+                feedback.className = 'correct';
+                feedback.style.background = 'rgba(39, 174, 96, 0.1)';
+                feedback.style.color = '#27ae60';
+                feedback.innerHTML = '✅ 正确！老农满意地点头：“先生算得真准！” 你运用了 <strong>割补法</strong>，将 L 形分割成两个矩形，分别计算再相加。';
+                liuhuiSolved = true;
+                drawField();
+                gebuCard.style.display = 'block';
+                nextBtn.style.display = 'inline-block';
+                this.style.background = '#27ae60';
+                this.style.color = 'white';
+            } else {
+                feedback.className = 'wrong';
+                feedback.style.background = 'rgba(192, 57, 43, 0.1)';
+                feedback.style.color = '#c0392b';
+                feedback.innerHTML = '❌ 再算算！左边的矩形面积 = 长 × 宽 = 6 × 3 = 18 平方步；下边的矩形面积 = 4 × 2 = 8 平方步。总面积 = 18 + 8 = ？';
+                options.forEach(b => b.disabled = false);
+                this.style.background = '#e74c3c';
+                this.style.color = 'white';
+                setTimeout(() => {
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 800);
+            }
+        });
+    });
+
+    nextBtn.addEventListener('click', function() {
+        alert('🎉 恭喜完成第一关！后续关卡正在开发中……');
+    });
+
+    drawField();
+});
 </script>
     <!-- 黄金分割多重图片弹窗 -->
     <div id="goldSequenceModal" style="display: none; position: fixed; z-index: 2002; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; backdrop-filter: blur(8px);">
