@@ -1174,7 +1174,14 @@
                     <div class="game-card" style="border-left-color: var(--mathclassic);"><span class="game-tag mathclassic">经典算学</span><h3>勾股拼图</h3><div class="math-core">数学核心：面积守恒、几何证明</div><div class="play-desc">拖拽直角三角形拼出正方形，验证勾股定理（开发中）</div></div>
                     <div class="game-card" style="border-left-color: var(--mathclassic);"><span class="game-tag mathclassic">经典算学</span><h3>算筹解密</h3><div class="math-core">数学核心：位值制、方程求解</div><div class="play-desc">用算筹摆出《九章算术》方程并求解（开发中）</div></div>
                     <div class="game-card" onclick="switchGame('golden-ratio')" style="border-left-color: var(--architecture);"><span class="game-tag architecture">建筑几何</span><h3>黄金比例探索</h3><div class="math-core">数学核心：无理数 φ、比例计算、矩形验证</div><div class="play-desc">拖动滑块调整矩形长边，当长宽比逼近1.618时锁定，验证黄金矩形的视觉和谐感</div></div>
+<div class="game-card" onclick="switchGame('squizzball')" style="border-left-color: var(--mathclassic);">
+    <span class="game-tag mathclassic">经典算学</span>
+    <h3>Squizzball · 探索之旅</h3>
+    <div class="math-core">数学核心：空间探索、策略规划</div>
+    <div class="play-desc">控制角色探索古代数学世界，收集智慧碎片，躲避邪恶书虫！</div>
+</div>
                 </div>
+                
                 <div id="game-solarterm-wheel" class="game-content" style="display: none;">
                     <div class="game-container"><div class="game-title"><i class="fas fa-sun"></i> 节气轮盘挑战</div><div class="game-tips">提示：24节气对应太阳黄经0°~360°，每节气间隔15°（春分0°、清明15°、立夏45°、夏至90°...），拖动轮盘将「当前节气」对准上方标记！</div><div class="solarterm-wheel" id="wheel" onmousedown="startRotate(event)" onmouseup="stopRotate()" onmouseleave="stopRotate()"><div class="wheel-marker"></div><div class="wheel-inner" id="wheel-degree">0°</div></div><div class="solarterm-list"><div class="solarterm-item">春分 <div class="degree">0°</div></div><div class="solarterm-item">清明 <div class="degree">15°</div></div><div class="solarterm-item">谷雨 <div class="degree">30°</div></div><div class="solarterm-item">立夏 <div class="degree">45°</div></div><div class="solarterm-item">小满 <div class="degree">60°</div></div><div class="solarterm-item">芒种 <div class="degree">75°</div></div><div class="solarterm-item">夏至 <div class="degree">90°</div></div><div class="solarterm-item">小暑 <div class="degree">105°</div></div><div class="solarterm-item">大暑 <div class="degree">120°</div></div><div class="solarterm-item">立秋 <div class="degree">135°</div></div><div class="solarterm-item">处暑 <div class="degree">150°</div></div><div class="solarterm-item">白露 <div class="degree">165°</div></div><div class="solarterm-item">秋分 <div class="degree">180°</div></div><div class="solarterm-item">寒露 <div class="degree">195°</div></div><div class="solarterm-item">霜降 <div class="degree">210°</div></div><div class="solarterm-item">立冬 <div class="degree">225°</div></div><div class="solarterm-item">小雪 <div class="degree">240°</div></div><div class="solarterm-item">大雪 <div class="degree">255°</div></div><div class="solarterm-item">冬至 <div class="degree">270°</div></div><div class="solarterm-item">小寒 <div class="degree">285°</div></div><div class="solarterm-item">大寒 <div class="degree">300°</div></div><div class="solarterm-item">立春 <div class="degree">315°</div></div><div class="solarterm-item">雨水 <div class="degree">330°</div></div><div class="solarterm-item">惊蛰 <div class="degree">345°</div></div></div></div>
                 </div>
@@ -1228,6 +1235,17 @@
                 老农说：“左边矩形长 6 步、宽 3 步；下边矩形长 4 步、宽 2 步。请先生帮我算算总面积吧！”
             </p>
         </div>
+        <!-- Squizzball 游戏 -->
+<div id="game-squizzball" class="game-content" style="display: none;">
+    <div class="game-container">
+        <div class="game-title"><i class="fas fa-gamepad"></i> Squizzball · 探索之旅</div>
+        <div class="game-tips">💡 提示：使用 <strong>方向键</strong> 或 <strong>WASD</strong> 控制角色移动，空格键确认。探索地图，收集智慧碎片，躲避敌人！</div>
+        <iframe src="games/squizzball/index.html" 
+                style="width: 100%; height: 600px; border: none; border-radius: 12px; background: #2c3e50;"
+                allowfullscreen>
+        </iframe>
+    </div>
+</div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: center;">
             <div>
