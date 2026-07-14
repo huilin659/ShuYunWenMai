@@ -1,13 +1,885 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <title>Game</title>
-  <link rel="stylesheet" href="res/main.css">
-  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数蕴文脉 · 智慧探索</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', 'Microsoft YaHei', sans-serif;
+            overflow: hidden;
+            margin: 0;
+        }
+        #gameWrapper {
+            position: relative;
+            background: #f7f2eb;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 4px solid #8b5e3c;
+        }
+        canvas {
+            display: block;
+            background: #fdf8f0;
+            cursor: pointer;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        #score {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.85);
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 2px solid #8b5e3c;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            pointer-events: none;
+            z-index: 10;
+        }
+        #score span { color: #c0392b; font-size: 22px; }
+        #title-bar {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.85);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 2px solid #8b5e3c;
+            pointer-events: none;
+            z-index: 10;
+        }
+        #powerup-status {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 20px;
+            border-radius: 20px;
+            border: 2px solid #f1c40f;
+            display: none;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        /* ---- 公式通知容器 ---- */
+        #formula-notifications {
+            position: absolute;
+            top: 120px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            pointer-events: none;
+            z-index: 20;
+            width: 280px;
+        }
+        .formula-msg {
+            background: rgba(255, 255, 255, 0.92);
+            border-left: 4px solid #c0392b;
+            padding: 10px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 500;
+            animation: formulaFade 2.5s ease forwards;
+            width: 100%;
+            text-align: right;
+            backdrop-filter: blur(4px);
+        }
+        .formula-msg .formula-name {
+            font-size: 12px;
+            color: #8b5e3c;
+            font-weight: 400;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .formula-msg .formula-expr {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 16px;
+        }
+        @keyframes formulaFade {
+            0% { opacity: 0; transform: translateX(30px) scale(0.9); }
+            15% { opacity: 1; transform: translateX(0) scale(1); }
+            70% { opacity: 1; transform: translateX(0) scale(1); }
+            100% { opacity: 0; transform: translateX(-20px) scale(0.95); }
+        }
+
+        /* ===== 游戏结束弹窗（修复滚动） ===== */
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 24px 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            pointer-events: auto;          /* 允许滚动和点击 */
+            border: 3px solid #c0392b;
+            max-width: 90%;
+            max-height: 80vh;              /* 限制高度 */
+            overflow-y: auto;              /* 启用滚动 */
+            z-index: 30;
+            min-width: 320px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        /* 美化滚动条 */
+        #game-over::-webkit-scrollbar { width: 5px; }
+        #game-over::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        #game-over::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 4px; }
+
+        #game-over h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #fdecea;
+        }
+        #game-over .final-score {
+            font-size: 42px;
+            font-weight: 700;
+            color: #f1c40f;
+        }
+        #game-over .formula-summary {
+            margin: 14px 0;
+            text-align: left;
+            background: rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 10px 14px;
+            max-height: 160px;             /* 限定高度，内部滚动 */
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        /* 公式汇总滚动条 */
+        .formula-summary::-webkit-scrollbar { width: 4px; }
+        .formula-summary::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+        .formula-summary::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 4px; }
+
+        #game-over .formula-summary .f-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 4px 0;
+        }
+        #game-over .formula-summary .f-item .f-name {
+            color: #f1c40f;
+        }
+        #game-over .formula-summary .f-item .f-expr {
+            color: #b0c4de;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        #game-over p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 6px;
+        }
+        #restart-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        #restart-btn:hover {
+            transform: scale(1.05);
+            background: #e74c3c;
+        }
+        .hint {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #7f8c8d;
+            font-size: 12px;
+            background: rgba(255,255,255,0.7);
+            padding: 4px 16px;
+            border-radius: 20px;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
-  <div id="board"></div>
-  <script src="bundle.js"></script>
+
+<div id="gameWrapper">
+    <canvas id="gameCanvas" width="700" height="500"></canvas>
+    <div id="ui-overlay">
+        <div id="title-bar">📜 智慧探索 · 数学之旅</div>
+        <div id="score">🧮 智慧碎片 <span id="scoreValue">0</span></div>
+        <div id="powerup-status">✨ 无敌 · <span id="powerupTimer">0</span>s</div>
+        <div id="formula-notifications"></div>
+        <div id="game-over">
+            <h2>📖 探索暂告一段落</h2>
+            <p>你收集了 <span class="final-score" id="finalScore">0</span> 块智慧碎片</p>
+            <div class="formula-summary" id="formulaSummary"></div>
+            <p style="font-size:13px; opacity:0.6; margin-top:4px;">“学而时习之，不亦说乎。” —— 孔子</p>
+            <button id="restart-btn">🔄 重新探索</button>
+        </div>
+        <div class="hint">⬆⬇⬅➡ 移动 · 收集碎片 · 躲避谬误</div>
+    </div>
+</div>
+
+<script>
+    // ============================================
+    // 数蕴文脉 · 智慧探索（v3 - 公式合成版）
+    // 修复：游戏结束弹窗滚动问题
+    // 玩家替换为刘徽图片
+    // ============================================
+
+    // ---- 加载刘徽图片 ----
+    const liuhuiImg = new Image();
+    liuhuiImg.src = 'liuhui.png';  // 请确保图片与 index.html 在同一目录
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreSpan = document.getElementById('scoreValue');
+    const gameOverDiv = document.getElementById('game-over');
+    const finalScoreSpan = document.getElementById('finalScore');
+    const formulaSummary = document.getElementById('formulaSummary');
+    const restartBtn = document.getElementById('restart-btn');
+    const powerupStatus = document.getElementById('powerup-status');
+    const notificationsContainer = document.getElementById('formula-notifications');
+
+    const W = 700, H = 500;
+
+    // ---- 数学公式库 ----
+    const FORMULAS = [
+        { name: '勾股定理', expr: 'a² + b² = c²' },
+        { name: '黄金比例', expr: 'φ = (1+√5)/2 ≈ 1.618' },
+        { name: '圆周率', expr: 'π ≈ 3.14159' },
+        { name: '等差数列求和', expr: 'Sₙ = n(a₁+aₙ)/2' },
+        { name: '斐波那契数列', expr: 'Fₙ = Fₙ₋₁ + Fₙ₋₂' },
+        { name: '欧拉公式', expr: 'e^(iπ) + 1 = 0' },
+        { name: '正弦定理', expr: 'a/sinA = b/sinB = c/sinC' },
+        { name: '余弦定理', expr: 'c² = a² + b² - 2ab·cosC' },
+        { name: '二项式定理', expr: '(a+b)ⁿ = Σ C(n,k)·a^(n-k)·b^k' },
+        { name: '质数定理', expr: 'π(x) ~ x/ln(x)' },
+    ];
+    let formulaIndex = 0;
+    let collectedFormulas = [];
+    const FORMULA_THRESHOLD = 10;
+
+    // ---- 玩家 ----
+    const player = {
+        x: W/2,
+        y: H/2,
+        r: 16,
+        speed: 3.8,
+        vx: 0,
+        vy: 0
+    };
+
+    // ---- 游戏状态 ----
+    let score = 0;
+    let gameRunning = true;
+    let keys = {};
+    let particles = [];
+    let stars = [];
+    let enemies = [];
+    let powerups = [];
+    let frame = 0;
+    let scoreSinceLastPowerup = 0;
+    let enemySpawnDelay = 180;
+    let gameStartFrame = 0;
+    let nextEnemySpawnFrame = 0;
+
+    // ---- 玩家强化 ----
+    let powerupActive = false;
+    let powerupType = '';
+    let powerupTimer = 0;
+    let powerupDuration = 0;
+    const MAX_STARS = 20;
+    const MAX_ENEMIES = 14;
+    const PLAYER_COLOR = '#8b5e3c';
+    const PLAYER_ROBE = '#c0392b';
+
+    // ---- 星星 ----
+    class Star {
+        constructor() {
+            this.x = 40 + Math.random() * (W - 80);
+            this.y = 40 + Math.random() * (H - 80);
+            this.r = 10 + Math.random() * 6;
+            this.type = Math.floor(Math.random() * 6);
+            this.symbols = ['π', 'φ', '√', '∑', '∫', '∞'];
+            this.symbol = this.symbols[this.type];
+            this.color = ['#2980b9', '#27ae60', '#8e44ad', '#e67e22', '#f1c40f', '#1abc9c'][this.type];
+            this.glow = 0;
+            this.glowDir = 1;
+        }
+
+        draw() {
+            this.glow += 0.02 * this.glowDir;
+            if (this.glow > 1 || this.glow < 0) this.glowDir *= -1;
+            ctx.shadowColor = this.color;
+            ctx.shadowBlur = 20 + 10 * this.glow;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = this.color + '80';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = `${this.r}px 'Times New Roman', serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(this.symbol, this.x, this.y + 1);
+            for (let i = 0; i < 4; i++) {
+                const angle = Date.now() / 1000 + i * Math.PI / 2;
+                const dx = Math.cos(angle) * (this.r + 4);
+                const dy = Math.sin(angle) * (this.r + 4);
+                ctx.beginPath();
+                ctx.arc(this.x + dx, this.y + dy, 2, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+    }
+
+    // ---- 敌人 ----
+    class Enemy {
+        constructor() {
+            const side = Math.floor(Math.random() * 4);
+            if (side === 0) { this.x = -30; this.y = Math.random() * H; }
+            else if (side === 1) { this.x = W + 30; this.y = Math.random() * H; }
+            else if (side === 2) { this.x = Math.random() * W; this.y = -30; }
+            else { this.x = Math.random() * W; this.y = H + 30; }
+            this.r = 14 + Math.random() * 6;
+            this.speed = 0.8 + Math.random() * 1.2;
+            const dx = player.x - this.x;
+            const dy = player.y - this.y;
+            const dist = Math.hypot(dx, dy);
+            this.vx = (dx / dist) * this.speed;
+            this.vy = (dy / dist) * this.speed;
+            this.color = ['#8e44ad', '#c0392b', '#2c3e50', '#7f8c8d'][Math.floor(Math.random() * 4)];
+            this.wobble = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.wobble += 0.05;
+            const perpX = -this.vy / Math.hypot(this.vx, this.vy);
+            const perpY = this.vx / Math.hypot(this.vx, this.vy);
+            this.x += Math.sin(this.wobble) * perpX * 0.3;
+            this.y += Math.sin(this.wobble) * perpY * 0.3;
+        }
+
+        draw() {
+            ctx.shadowColor = this.color;
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.ellipse(this.x, this.y, this.r, this.r * 0.7, 0, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(this.x - this.r * 0.3, this.y - this.r * 0.2, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(this.x + this.r * 0.3, this.y - this.r * 0.2, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#2c3e50';
+            ctx.beginPath();
+            ctx.arc(this.x - this.r * 0.3 + 2, this.y - this.r * 0.2 + 1, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(this.x + this.r * 0.3 + 2, this.y - this.r * 0.2 + 1, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            ctx.font = '9px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('📕', this.x, this.y + this.r + 14);
+        }
+
+        isOffScreen() {
+            return this.x < -80 || this.x > W + 80 || this.y < -80 || this.y > H + 80;
+        }
+    }
+
+    // ---- 强化道具 ----
+    class Powerup {
+        constructor(x, y, type) {
+            this.x = x;
+            this.y = y;
+            this.r = 18;
+            this.type = type;
+            this.bobPhase = Math.random() * Math.PI * 2;
+            this.glow = 0;
+            this.glowDir = 1;
+        }
+
+        draw() {
+            this.glow += 0.03 * this.glowDir;
+            if (this.glow > 1 || this.glow < 0) this.glowDir *= -1;
+            this.bobPhase += 0.03;
+            const bobY = Math.sin(this.bobPhase) * 3;
+            const color = this.type === 'invincible' ? '#f1c40f' : '#e74c3c';
+            const icon = this.type === 'invincible' ? '🛡️' : '⚡';
+            const label = this.type === 'invincible' ? '无敌' : '反伤';
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 30 + 15 * this.glow;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y + bobY, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = color + '30';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y + bobY, this.r, 0, Math.PI * 2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.font = `${this.r}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(icon, this.x, this.y + bobY + 1);
+            ctx.fillStyle = 'rgba(44,62,80,0.85)';
+            ctx.font = '10px "Microsoft YaHei", sans-serif';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(label, this.x, this.y + bobY - this.r - 4);
+        }
+    }
+
+    // ---- 粒子 ----
+    class Particle {
+        constructor(x, y, color, symbol) {
+            this.x = x;
+            this.y = y;
+            this.vx = (Math.random() - 0.5) * 6;
+            this.vy = (Math.random() - 0.5) * 6 - 3;
+            this.life = 1.0;
+            this.size = 4 + Math.random() * 8;
+            this.color = color;
+            this.symbol = symbol || '✦';
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.08;
+            this.life -= 0.015;
+            this.size *= 0.99;
+        }
+
+        draw() {
+            ctx.globalAlpha = this.life;
+            ctx.fillStyle = this.color;
+            ctx.font = `${this.size * 2}px 'Times New Roman', serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(this.symbol, this.x, this.y);
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    // ---- 辅助 ----
+    function dist(a, b) {
+        return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function spawnStar() {
+        if (stars.length < MAX_STARS) stars.push(new Star());
+    }
+
+    // ---- 显示公式通知 ----
+    function showFormulaNotification(formula) {
+        const div = document.createElement('div');
+        div.className = 'formula-msg';
+        div.innerHTML = `
+            <span class="formula-name">📐 ${formula.name}</span>
+            <span class="formula-expr">${formula.expr}</span>
+        `;
+        notificationsContainer.appendChild(div);
+        setTimeout(() => {
+            if (div.parentNode) div.parentNode.removeChild(div);
+        }, 2800);
+    }
+
+    // ---- 初始化 ----
+    function initGame() {
+        score = 0;
+        gameRunning = true;
+        gameStartFrame = frame;
+        enemySpawnDelay = 180;
+        scoreSinceLastPowerup = 0;
+        formulaIndex = 0;
+        collectedFormulas = [];
+        player.x = W/2;
+        player.y = H/2;
+        player.vx = 0;
+        player.vy = 0;
+        powerupActive = false;
+        powerupType = '';
+        powerupTimer = 0;
+        powerupDuration = 0;
+        stars = [];
+        enemies = [];
+        powerups = [];
+        particles = [];
+        frame = 0;
+        gameOverDiv.style.display = 'none';
+        powerupStatus.style.display = 'none';
+        scoreSpan.textContent = '0';
+        notificationsContainer.innerHTML = '';
+        nextEnemySpawnFrame = gameStartFrame + enemySpawnDelay + 60 + Math.floor(Math.random() * 90);
+        for (let i = 0; i < 12; i++) spawnStar();
+    }
+
+    // ---- 道具生成 ----
+    function spawnPowerup(x, y) {
+        const type = Math.random() < 0.5 ? 'invincible' : 'reflect';
+        powerups.push(new Powerup(x, y, type));
+    }
+
+    // ---- 激活道具 ----
+    function activatePowerup(type) {
+        powerupActive = true;
+        powerupType = type;
+        powerupTimer = 0;
+        powerupDuration = type === 'invincible' ? 240 : 180;
+        powerupStatus.style.display = 'block';
+        const label = type === 'invincible' ? '🛡️ 无敌' : '⚡ 反伤';
+        powerupStatus.innerHTML = `${label} · <span id="powerupTimer">${Math.ceil(powerupDuration/60)}</span>s`;
+        for (let i = 0; i < 25; i++) {
+            const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db'];
+            particles.push(new Particle(
+                player.x + (Math.random() - 0.5) * 40,
+                player.y + (Math.random() - 0.5) * 40,
+                colors[Math.floor(Math.random() * colors.length)],
+                ['✦', '⭐', '✨', '★'][Math.floor(Math.random() * 4)]
+            ));
+        }
+    }
+
+    // ---- 更新 ----
+    function update() {
+        if (!gameRunning) return;
+        frame++;
+
+        let dx = 0, dy = 0;
+        if (keys['ArrowLeft'] || keys['KeyA']) dx = -1;
+        if (keys['ArrowRight'] || keys['KeyD']) dx = 1;
+        if (keys['ArrowUp'] || keys['KeyW']) dy = -1;
+        if (keys['ArrowDown'] || keys['KeyS']) dy = 1;
+        if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
+        player.x += dx * player.speed;
+        player.y += dy * player.speed;
+        player.x = Math.max(player.r, Math.min(W - player.r, player.x));
+        player.y = Math.max(player.r, Math.min(H - player.r, player.y));
+
+        if (powerupActive) {
+            powerupTimer++;
+            const remaining = Math.ceil((powerupDuration - powerupTimer) / 60);
+            if (remaining > 0) {
+                const label = powerupType === 'invincible' ? '🛡️ 无敌' : '⚡ 反伤';
+                powerupStatus.innerHTML = `${label} · <span id="powerupTimer">${remaining}</span>s`;
+            }
+            if (powerupTimer >= powerupDuration) {
+                powerupActive = false;
+                powerupType = '';
+                powerupTimer = 0;
+                powerupStatus.style.display = 'none';
+                for (let i = 0; i < 15; i++) {
+                    particles.push(new Particle(
+                        player.x + (Math.random() - 0.5) * 30,
+                        player.y + (Math.random() - 0.5) * 30,
+                        '#95a5a6', '💫'
+                    ));
+                }
+            }
+        }
+
+        // ---- 收集星星 ----
+        for (let i = stars.length - 1; i >= 0; i--) {
+            const s = stars[i];
+            if (dist(player, s) < player.r + s.r) {
+                score++;
+                scoreSinceLastPowerup++;
+                scoreSpan.textContent = score;
+
+                if (score % FORMULA_THRESHOLD === 0 && score > 0) {
+                    const formula = FORMULAS[formulaIndex % FORMULAS.length];
+                    collectedFormulas.push(formula);
+                    showFormulaNotification(formula);
+                    formulaIndex++;
+                }
+
+                if (scoreSinceLastPowerup >= 5) {
+                    scoreSinceLastPowerup = 0;
+                    spawnPowerup(s.x, s.y);
+                }
+
+                for (let j = 0; j < 12; j++) {
+                    particles.push(new Particle(s.x, s.y, s.color, s.symbol));
+                }
+                stars.splice(i, 1);
+                spawnStar();
+            }
+        }
+
+        // ---- 拾取道具 ----
+        for (let i = powerups.length - 1; i >= 0; i--) {
+            const p = powerups[i];
+            if (dist(player, p) < player.r + p.r) {
+                activatePowerup(p.type);
+                for (let j = 0; j < 20; j++) {
+                    const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db'];
+                    particles.push(new Particle(
+                        p.x + (Math.random() - 0.5) * 20,
+                        p.y + (Math.random() - 0.5) * 20,
+                        colors[Math.floor(Math.random() * colors.length)],
+                        ['✦', '⭐', '✨', '★'][Math.floor(Math.random() * 4)]
+                    ));
+                }
+                powerups.splice(i, 1);
+            }
+        }
+
+        // ---- 敌人生成 ----
+        if (frame - gameStartFrame > enemySpawnDelay) {
+            if (frame >= nextEnemySpawnFrame && enemies.length < MAX_ENEMIES) {
+                enemies.push(new Enemy());
+                let baseDelay = 180 - Math.min(score, 100) * 0.5;
+                const randomFactor = 0.6 + Math.random() * 0.8;
+                let nextDelay = Math.floor(baseDelay * randomFactor);
+                nextDelay = Math.max(30, nextDelay);
+                if (Math.random() < 0.15) {
+                    nextDelay = Math.floor(nextDelay * (0.3 + Math.random() * 0.4));
+                } else if (Math.random() < 0.10) {
+                    nextDelay = Math.floor(nextDelay * (1.8 + Math.random() * 0.6));
+                }
+                nextEnemySpawnFrame = frame + nextDelay;
+            }
+        }
+
+        // ---- 敌人更新 ----
+        for (let i = enemies.length - 1; i >= 0; i--) {
+            const e = enemies[i];
+            e.update();
+            if (dist(player, e) < player.r + e.r) {
+                if (powerupActive && powerupType === 'invincible') {
+                    const angle = Math.atan2(e.y - player.y, e.x - player.x);
+                    e.x += Math.cos(angle) * 30;
+                    e.y += Math.sin(angle) * 30;
+                    score += 2;
+                    scoreSpan.textContent = score;
+                    for (let j = 0; j < 10; j++) {
+                        particles.push(new Particle(e.x, e.y, '#f1c40f', '✨'));
+                    }
+                } else if (powerupActive && powerupType === 'reflect') {
+                    for (let j = 0; j < 15; j++) {
+                        particles.push(new Particle(e.x, e.y, '#e74c3c', '⚡'));
+                    }
+                    score += 5;
+                    scoreSpan.textContent = score;
+                    enemies.splice(i, 1);
+                } else {
+                    gameOver();
+                    return;
+                }
+            }
+            if (e.isOffScreen()) {
+                enemies.splice(i, 1);
+            }
+        }
+
+        if (stars.length < 8) {
+            for (let i = stars.length; i < 8; i++) spawnStar();
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].update();
+            if (particles[i].life <= 0) particles.splice(i, 1);
+        }
+    }
+
+    // ---- 游戏结束 ----
+    function gameOver() {
+        gameRunning = false;
+        finalScoreSpan.textContent = score;
+        if (collectedFormulas.length === 0) {
+            formulaSummary.innerHTML = '<div style="color:#b0c4de; font-style:italic;">尚未合成任何公式，继续探索吧！</div>';
+        } else {
+            let html = '';
+            collectedFormulas.forEach((f, idx) => {
+                html += `<div class="f-item">
+                    <span class="f-name">${idx+1}. ${f.name}</span>
+                    <span class="f-expr">${f.expr}</span>
+                </div>`;
+            });
+            formulaSummary.innerHTML = html;
+        }
+        gameOverDiv.style.display = 'block';
+        powerupStatus.style.display = 'none';
+    }
+
+    // ---- 绘制 ----
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const gradient = ctx.createRadialGradient(W/2, H/2, 50, W/2, H/2, 400);
+        gradient.addColorStop(0, '#fdf8f0');
+        gradient.addColorStop(0.7, '#f5ede4');
+        gradient.addColorStop(1, '#e8ddd0');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = 'rgba(139, 94, 60, 0.06)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 30; i++) {
+            const x = Math.random() * W;
+            const y = Math.random() * H;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 30 + Math.random() * 40, y + 10 + Math.random() * 20);
+            ctx.stroke();
+        }
+        ctx.strokeStyle = 'rgba(139, 94, 60, 0.3)';
+        ctx.lineWidth = 2;
+        const cornerSize = 20, margin = 12;
+        ctx.beginPath();
+        ctx.moveTo(margin, margin + cornerSize);
+        ctx.lineTo(margin, margin);
+        ctx.lineTo(margin + cornerSize, margin);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(W - margin - cornerSize, margin);
+        ctx.lineTo(W - margin, margin);
+        ctx.lineTo(W - margin, margin + cornerSize);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(margin, H - margin - cornerSize);
+        ctx.lineTo(margin, H - margin);
+        ctx.lineTo(margin + cornerSize, H - margin);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(W - margin - cornerSize, H - margin);
+        ctx.lineTo(W - margin, H - margin);
+        ctx.lineTo(W - margin, H - margin - cornerSize);
+        ctx.stroke();
+
+        for (const s of stars) s.draw();
+        for (const e of enemies) e.draw();
+        for (const p of powerups) p.draw();
+
+        // ---- 绘制玩家（刘徽图片） ----
+        const p = player;
+        // 无敌/反伤光环（保留）
+        if (powerupActive) {
+            const glowColor = powerupType === 'invincible' ? '#f1c40f' : '#e74c3c';
+            ctx.save();
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = 40;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r + 18 + 4 * Math.sin(Date.now() / 200), 0, Math.PI * 2);
+            ctx.strokeStyle = glowColor + '80';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([6, 6]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.restore();
+        }
+
+        // 绘制刘徽图片
+        if (liuhuiImg.complete && liuhuiImg.naturalWidth > 0) {
+            const size = p.r * 3.0;  // 图片大小，可根据需要调整
+            ctx.save();
+            ctx.shadowColor = 'rgba(0,0,0,0.25)';
+            ctx.shadowBlur = 15;
+            ctx.drawImage(liuhuiImg, p.x - size/2, p.y - size/2, size, size);
+            ctx.restore();
+        } else {
+            // 图片加载中的备用显示
+            ctx.fillStyle = '#c0392b';
+            ctx.font = '18px "Microsoft YaHei", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('刘徽', p.x, p.y);
+        }
+
+        for (const p of particles) p.draw();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = 'rgba(139, 94, 60, 0.3)';
+        ctx.font = '11px "Microsoft YaHei", serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('—— 数蕴文脉 · 以数学之眼，观文化之美 ——', W/2, H - 6);
+    }
+
+    function loop() {
+        update();
+        draw();
+        requestAnimationFrame(loop);
+    }
+
+    // ---- 键盘事件 ----
+    document.addEventListener('keydown', function(e) {
+        const key = e.code;
+        if (key.startsWith('Arrow') || key === 'Space' || key === 'KeyW' || key === 'KeyA' || key === 'KeyS' || key === 'KeyD') {
+            e.preventDefault();
+        }
+        keys[key] = true;
+        if (key === 'Space') {
+            if (!gameRunning) initGame();
+        }
+    });
+    document.addEventListener('keyup', function(e) {
+        const key = e.code;
+        if (key.startsWith('Arrow') || key === 'Space' || key === 'KeyW' || key === 'KeyA' || key === 'KeyS' || key === 'KeyD') {
+            e.preventDefault();
+        }
+        keys[key] = false;
+    });
+
+    restartBtn.addEventListener('click', initGame);
+    window.addEventListener('blur', () => { keys = {}; });
+
+    initGame();
+    loop();
+
+    console.log('📜 数蕴文脉 · 智慧探索（v3 修复滚动 + 刘徽图片）已启动！');
+    console.log('📐 每收集 10 个碎片合成一条数学公式！');
+    console.log('🔄 结算界面现在可以滚动查看所有公式。');
+</script>
 </body>
 </html>
