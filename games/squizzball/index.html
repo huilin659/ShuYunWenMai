@@ -84,10 +84,34 @@
             white-space: nowrap;
             z-index: 10;
         }
+        /* ---- Debuff 显示（缓慢） ---- */
+        #debuff-status {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8e44ad;
+            font-size: 16px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 20px;
+            border-radius: 20px;
+            border: 2px solid #8e44ad;
+            display: none;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
+            animation: debuffPulse 0.8s ease-in-out infinite alternate;
+        }
+        @keyframes debuffPulse {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
         /* ---- 公式通知容器 ---- */
         #formula-notifications {
             position: absolute;
-            top: 120px;
+            top: 150px;
             right: 20px;
             display: flex;
             flex-direction: column;
@@ -130,7 +154,7 @@
             100% { opacity: 0; transform: translateX(-20px) scale(0.95); }
         }
 
-        /* ===== 游戏结束弹窗（修复滚动） ===== */
+        /* ===== 游戏结束弹窗 ===== */
         #game-over {
             position: absolute;
             top: 50%;
@@ -242,6 +266,7 @@
         <div id="title-bar">📜 智慧探索 · 数学之旅</div>
         <div id="score">🧮 智慧碎片 <span id="scoreValue">0</span></div>
         <div id="powerup-status">✨ 无敌 · <span id="powerupTimer">0</span>s</div>
+        <div id="debuff-status">🐢 缓慢</div>
         <div id="formula-notifications"></div>
         <div id="game-over">
             <h2>📖 探索暂告一段落</h2>
@@ -256,8 +281,8 @@
 
 <script>
     // ============================================
-    // 数蕴文脉 · 智慧探索（超轻量粒子版）
-    // 极致优化：粒子数量减少到最低，尺寸增大，视觉不变
+    // 数蕴文脉 · 智慧探索（超轻量粒子版 + 缓慢Debuff）
+    // 新增：当触发大量粒子时显示“缓慢”负面效果
     // ============================================
 
     // ---- 加载刘徽图片 ----
@@ -272,6 +297,7 @@
     const formulaSummary = document.getElementById('formulaSummary');
     const restartBtn = document.getElementById('restart-btn');
     const powerupStatus = document.getElementById('powerup-status');
+    const debuffStatus = document.getElementById('debuff-status');
     const notificationsContainer = document.getElementById('formula-notifications');
 
     const W = 700, H = 500;
@@ -325,10 +351,15 @@
     const MAX_STARS = 20;
     const MAX_ENEMIES = 14;
 
+    // ---- Debuff 状态 ----
+    let debuffActive = false;
+    let debuffTimer = 0;
+    const DEBUFF_DURATION = 90; // 1.5秒
+
     // ---- 超轻量粒子参数 ----
-    const MAX_PARTICLES = 20;           // 最大同时存在粒子数
-    const PARTICLE_LIFE_DECAY = 0.035;  // 加速消失
-    const PARTICLE_SIZE_BOOST = 1.6;    // 尺寸放大倍数
+    const MAX_PARTICLES = 20;
+    const PARTICLE_LIFE_DECAY = 0.035;
+    const PARTICLE_SIZE_BOOST = 1.6;
 
     // ---- 星星 ----
     class Star {
@@ -483,7 +514,7 @@
         }
     }
 
-    // ---- 超轻量粒子（尺寸大、数量少） ----
+    // ---- 超轻量粒子 ----
     class Particle {
         constructor(x, y, color, symbol) {
             this.x = x;
@@ -491,7 +522,7 @@
             this.vx = (Math.random() - 0.5) * 6;
             this.vy = (Math.random() - 0.5) * 6 - 3;
             this.life = 1.0;
-            this.size = (6 + Math.random() * 10) * PARTICLE_SIZE_BOOST; // 放大尺寸
+            this.size = (6 + Math.random() * 10) * PARTICLE_SIZE_BOOST;
             this.color = color;
             this.symbol = symbol || '✦';
         }
@@ -541,11 +572,17 @@
         }, 2800);
     }
 
-    // ---- 生成粒子（极低数量） ----
+    // ---- 生成粒子 + 触发缓慢Debuff ----
     function spawnParticles(x, y, color, symbol, count) {
-        const actualCount = Math.min(count, 5); // 强制最大5个
+        const actualCount = Math.min(count, 5);
         for (let i = 0; i < actualCount; i++) {
             particles.push(new Particle(x, y, color, symbol));
+        }
+        // 如果这次生成的粒子数 >= 3，触发“缓慢”负面效果
+        if (actualCount >= 3) {
+            debuffActive = true;
+            debuffTimer = 0;
+            debuffStatus.style.display = 'block';
         }
         if (particles.length > MAX_PARTICLES) {
             const excess = particles.length - MAX_PARTICLES;
@@ -570,6 +607,9 @@
         powerupType = '';
         powerupTimer = 0;
         powerupDuration = 0;
+        debuffActive = false;
+        debuffTimer = 0;
+        debuffStatus.style.display = 'none';
         stars = [];
         enemies = [];
         powerups = [];
@@ -598,7 +638,7 @@
         powerupStatus.style.display = 'block';
         const label = type === 'invincible' ? '🛡️ 无敌' : '⚡ 反伤';
         powerupStatus.innerHTML = `${label} · <span id="powerupTimer">${Math.ceil(powerupDuration/60)}</span>s`;
-        // 粒子生成：最多5个
+        // 生成粒子并触发debuff
         const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db'];
         for (let i = 0; i < 5; i++) {
             spawnParticles(
@@ -609,6 +649,11 @@
                 1
             );
         }
+        // 手动触发一次debuff（因为spawnParticles每次只生成1个，不会触发>=3的条件）
+        // 所以在这里直接显示debuff
+        debuffActive = true;
+        debuffTimer = 0;
+        debuffStatus.style.display = 'block';
     }
 
     // ---- 更新 ----
@@ -627,6 +672,7 @@
         player.x = Math.max(player.r, Math.min(W - player.r, player.x));
         player.y = Math.max(player.r, Math.min(H - player.r, player.y));
 
+        // 更新道具
         if (powerupActive) {
             powerupTimer++;
             const remaining = Math.ceil((powerupDuration - powerupTimer) / 60);
@@ -646,6 +692,15 @@
                         '#95a5a6', '💫', 1
                     );
                 }
+            }
+        }
+
+        // 更新 Debuff
+        if (debuffActive) {
+            debuffTimer++;
+            if (debuffTimer >= DEBUFF_DURATION) {
+                debuffActive = false;
+                debuffStatus.style.display = 'none';
             }
         }
 
@@ -669,7 +724,7 @@
                     spawnPowerup(s.x, s.y);
                 }
 
-                // 收集粒子：最多3个
+                // 收集粒子：生成3个（触发debuff）
                 spawnParticles(s.x, s.y, s.color, s.symbol, 3);
 
                 stars.splice(i, 1);
@@ -774,6 +829,7 @@
         }
         gameOverDiv.style.display = 'block';
         powerupStatus.style.display = 'none';
+        debuffStatus.style.display = 'none';
     }
 
     // ---- 绘制 ----
@@ -823,7 +879,7 @@
         for (const e of enemies) e.draw();
         for (const p of powerups) p.draw();
 
-        // ---- 绘制玩家（刘徽图片） ----
+        // ---- 绘制玩家 ----
         const p = player;
         if (powerupActive) {
             const glowColor = powerupType === 'invincible' ? '#f1c40f' : '#e74c3c';
@@ -894,8 +950,8 @@
     initGame();
     loop();
 
-    console.log('📜 数蕴文脉 · 智慧探索（超轻量粒子版）已启动！');
-    console.log('✨ 粒子数量极致压缩，尺寸增大，性能大幅提升！');
+    console.log('📜 数蕴文脉 · 智慧探索（超轻量粒子 + 缓慢Debuff）已启动！');
+    console.log('🐢 触发大量粒子时会显示“缓慢”状态，这是游戏机制的一部分！');
 </script>
 </body>
 </html>
