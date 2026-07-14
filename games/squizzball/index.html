@@ -259,7 +259,7 @@
 <script>
     // ============================================
     // 数蕴文脉 · 智慧探索（v3 - 公式合成版）
-    // 修复：游戏结束弹窗滚动问题
+    // 优化：减少粒子数量，缩短生命周期，限制最大粒子数
     // 玩家替换为刘徽图片
     // ============================================
 
@@ -329,6 +329,10 @@
     const MAX_ENEMIES = 14;
     const PLAYER_COLOR = '#8b5e3c';
     const PLAYER_ROBE = '#c0392b';
+
+    // ---- 粒子优化参数 ----
+    const MAX_PARTICLES = 40;          // 最大同时存在粒子数
+    const PARTICLE_LIFE_DECAY = 0.025; // 每次更新减少的生命值（原0.015）
 
     // ---- 星星 ----
     class Star {
@@ -483,7 +487,7 @@
         }
     }
 
-    // ---- 粒子 ----
+    // ---- 粒子（优化） ----
     class Particle {
         constructor(x, y, color, symbol) {
             this.x = x;
@@ -500,7 +504,7 @@
             this.x += this.vx;
             this.y += this.vy;
             this.vy += 0.08;
-            this.life -= 0.015;
+            this.life -= PARTICLE_LIFE_DECAY;  // 更快消失
             this.size *= 0.99;
         }
 
@@ -536,6 +540,20 @@
         setTimeout(() => {
             if (div.parentNode) div.parentNode.removeChild(div);
         }, 2800);
+    }
+
+    // ---- 生成粒子（带数量控制） ----
+    function spawnParticles(x, y, color, symbol, count) {
+        // 限制生成数量，防止过多
+        const actualCount = Math.min(count, 10);
+        for (let i = 0; i < actualCount; i++) {
+            particles.push(new Particle(x, y, color, symbol));
+        }
+        // 若粒子总数超出限制，移除最早的一些
+        if (particles.length > MAX_PARTICLES) {
+            const excess = particles.length - MAX_PARTICLES;
+            particles.splice(0, excess);
+        }
     }
 
     // ---- 初始化 ----
@@ -583,14 +601,16 @@
         powerupStatus.style.display = 'block';
         const label = type === 'invincible' ? '🛡️ 无敌' : '⚡ 反伤';
         powerupStatus.innerHTML = `${label} · <span id="powerupTimer">${Math.ceil(powerupDuration/60)}</span>s`;
-        for (let i = 0; i < 25; i++) {
-            const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db'];
-            particles.push(new Particle(
+        // 减少粒子生成数量
+        const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db'];
+        for (let i = 0; i < 12; i++) { // 原25
+            spawnParticles(
                 player.x + (Math.random() - 0.5) * 40,
                 player.y + (Math.random() - 0.5) * 40,
                 colors[Math.floor(Math.random() * colors.length)],
-                ['✦', '⭐', '✨', '★'][Math.floor(Math.random() * 4)]
-            ));
+                ['✦', '⭐', '✨', '★'][Math.floor(Math.random() * 4)],
+                1
+            );
         }
     }
 
@@ -622,12 +642,13 @@
                 powerupType = '';
                 powerupTimer = 0;
                 powerupStatus.style.display = 'none';
-                for (let i = 0; i < 15; i++) {
-                    particles.push(new Particle(
+                // 取消特效时少生成粒子
+                for (let i = 0; i < 8; i++) {
+                    spawnParticles(
                         player.x + (Math.random() - 0.5) * 30,
                         player.y + (Math.random() - 0.5) * 30,
-                        '#95a5a6', '💫'
-                    ));
+                        '#95a5a6', '💫', 1
+                    );
                 }
             }
         }
@@ -652,9 +673,9 @@
                     spawnPowerup(s.x, s.y);
                 }
 
-                for (let j = 0; j < 12; j++) {
-                    particles.push(new Particle(s.x, s.y, s.color, s.symbol));
-                }
+                // 生成粒子（减少数量）
+                spawnParticles(s.x, s.y, s.color, s.symbol, 6); // 原12
+
                 stars.splice(i, 1);
                 spawnStar();
             }
@@ -665,14 +686,16 @@
             const p = powerups[i];
             if (dist(player, p) < player.r + p.r) {
                 activatePowerup(p.type);
-                for (let j = 0; j < 20; j++) {
+                // 拾取时也生成粒子（已在 activate 中处理）
+                for (let j = 0; j < 8; j++) { // 原20
                     const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db'];
-                    particles.push(new Particle(
+                    spawnParticles(
                         p.x + (Math.random() - 0.5) * 20,
                         p.y + (Math.random() - 0.5) * 20,
                         colors[Math.floor(Math.random() * colors.length)],
-                        ['✦', '⭐', '✨', '★'][Math.floor(Math.random() * 4)]
-                    ));
+                        ['✦', '⭐', '✨', '★'][Math.floor(Math.random() * 4)],
+                        1
+                    );
                 }
                 powerups.splice(i, 1);
             }
@@ -706,13 +729,11 @@
                     e.y += Math.sin(angle) * 30;
                     score += 2;
                     scoreSpan.textContent = score;
-                    for (let j = 0; j < 10; j++) {
-                        particles.push(new Particle(e.x, e.y, '#f1c40f', '✨'));
-                    }
+                    // 弹开敌人粒子
+                    spawnParticles(e.x, e.y, '#f1c40f', '✨', 4); // 原10
                 } else if (powerupActive && powerupType === 'reflect') {
-                    for (let j = 0; j < 15; j++) {
-                        particles.push(new Particle(e.x, e.y, '#e74c3c', '⚡'));
-                    }
+                    // 消灭敌人粒子
+                    spawnParticles(e.x, e.y, '#e74c3c', '⚡', 8); // 原15
                     score += 5;
                     scoreSpan.textContent = score;
                     enemies.splice(i, 1);
@@ -730,9 +751,16 @@
             for (let i = stars.length; i < 8; i++) spawnStar();
         }
 
+        // ---- 更新粒子 ----
         for (let i = particles.length - 1; i >= 0; i--) {
             particles[i].update();
-            if (particles[i].life <= 0) particles.splice(i, 1);
+            if (particles[i].life <= 0) {
+                particles.splice(i, 1);
+            }
+        }
+        // 再次确保粒子总数不超过上限
+        if (particles.length > MAX_PARTICLES) {
+            particles.splice(0, particles.length - MAX_PARTICLES);
         }
     }
 
@@ -805,7 +833,6 @@
 
         // ---- 绘制玩家（刘徽图片） ----
         const p = player;
-        // 无敌/反伤光环（保留）
         if (powerupActive) {
             const glowColor = powerupType === 'invincible' ? '#f1c40f' : '#e74c3c';
             ctx.save();
@@ -821,16 +848,14 @@
             ctx.restore();
         }
 
-        // 绘制刘徽图片
         if (liuhuiImg.complete && liuhuiImg.naturalWidth > 0) {
-            const size = p.r * 3.0;  // 图片大小，可根据需要调整
+            const size = p.r * 3.0;
             ctx.save();
             ctx.shadowColor = 'rgba(0,0,0,0.25)';
             ctx.shadowBlur = 15;
             ctx.drawImage(liuhuiImg, p.x - size/2, p.y - size/2, size, size);
             ctx.restore();
         } else {
-            // 图片加载中的备用显示
             ctx.fillStyle = '#c0392b';
             ctx.font = '18px "Microsoft YaHei", sans-serif';
             ctx.textAlign = 'center';
@@ -877,9 +902,9 @@
     initGame();
     loop();
 
-    console.log('📜 数蕴文脉 · 智慧探索（v3 修复滚动 + 刘徽图片）已启动！');
+    console.log('📜 数蕴文脉 · 智慧探索（v3 优化粒子）已启动！');
     console.log('📐 每收集 10 个碎片合成一条数学公式！');
-    console.log('🔄 结算界面现在可以滚动查看所有公式。');
+    console.log('✨ 粒子特效已优化，性能更流畅。');
 </script>
 </body>
 </html>
