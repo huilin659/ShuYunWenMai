@@ -1163,120 +1163,161 @@
         </div>
 
         <!-- 游戏模式 -->
-        <div id="page-game" class="page">
-            <div class="section">
-                <div class="section-title"><i class="fas fa-gamepad"></i> 文化数学游戏总览</div>
-                <div class="game-grid">
-                    <div class="game-card" onclick="switchGame('solarterm-wheel')" style="border-left-color: var(--calendar);"><span class="game-tag calendar">历法天文</span><h3>节气轮盘</h3><div class="math-core">数学核心：角度测量、周期函数</div><div class="play-desc">转动黄道轮盘，将24节气对准对应太阳黄经角度（每节气15°等差数列）</div></div>
-                    <div class="game-card" onclick="switchGame('poetry-match')" style="border-left-color: var(--poetry);"><span class="game-tag poetry">诗词数学</span><h3>诗词对仗匹配</h3><div class="math-core">数学核心：映射关系、逻辑配对</div><div class="play-desc">上联词条散落，拖拽到下联对应位置，形成一一映射的对仗关系</div></div>
-                    <div class="game-card" onclick="switchGame('architecture-scale')" style="border-left-color: var(--architecture);"><span class="game-tag architecture">建筑几何</span><h3>营造比例尺</h3><div class="math-core">数学核心：比例计算、模数体系</div><div class="play-desc">给定《营造法式》材分制基准，计算并验证古建筑各构件实际尺寸</div></div>
-                    <div class="game-card" style="border-left-color: var(--music);"><span class="game-tag music">音律数理</span><h3>三分损益调音台</h3><div class="math-core">数学核心：等比数列、频率比</div><div class="play-desc">拖动滑块改变弦长比例，听音高变化并调出五声音阶（开发中）</div></div>
-                    <div class="game-card" style="border-left-color: var(--mathclassic);"><span class="game-tag mathclassic">经典算学</span><h3>勾股拼图</h3><div class="math-core">数学核心：面积守恒、几何证明</div><div class="play-desc">拖拽直角三角形拼出正方形，验证勾股定理（开发中）</div></div>
-                    <div class="game-card" style="border-left-color: var(--mathclassic);"><span class="game-tag mathclassic">经典算学</span><h3>算筹解密</h3><div class="math-core">数学核心：位值制、方程求解</div><div class="play-desc">用算筹摆出《九章算术》方程并求解（开发中）</div></div>
-                    <div class="game-card" onclick="switchGame('golden-ratio')" style="border-left-color: var(--architecture);"><span class="game-tag architecture">建筑几何</span><h3>黄金比例探索</h3><div class="math-core">数学核心：无理数 φ、比例计算、矩形验证</div><div class="play-desc">拖动滑块调整矩形长边，当长宽比逼近1.618时锁定，验证黄金矩形的视觉和谐感</div></div>
-<div class="game-card" onclick="switchGame('squizzball')" style="border-left-color: var(--mathclassic);">
-    <span class="game-tag mathclassic">经典算学</span>
-    <h3>Squizzball · 探索之旅</h3>
-    <div class="math-core">数学核心：空间探索、策略规划</div>
-    <div class="play-desc">控制角色探索古代数学世界，收集智慧碎片，躲避邪恶书虫！</div>
-</div>
-                </div>
-                
-                <div id="game-solarterm-wheel" class="game-content" style="display: none;">
-                    <div class="game-container"><div class="game-title"><i class="fas fa-sun"></i> 节气轮盘挑战</div><div class="game-tips">提示：24节气对应太阳黄经0°~360°，每节气间隔15°（春分0°、清明15°、立夏45°、夏至90°...），拖动轮盘将「当前节气」对准上方标记！</div><div class="solarterm-wheel" id="wheel" onmousedown="startRotate(event)" onmouseup="stopRotate()" onmouseleave="stopRotate()"><div class="wheel-marker"></div><div class="wheel-inner" id="wheel-degree">0°</div></div><div class="solarterm-list"><div class="solarterm-item">春分 <div class="degree">0°</div></div><div class="solarterm-item">清明 <div class="degree">15°</div></div><div class="solarterm-item">谷雨 <div class="degree">30°</div></div><div class="solarterm-item">立夏 <div class="degree">45°</div></div><div class="solarterm-item">小满 <div class="degree">60°</div></div><div class="solarterm-item">芒种 <div class="degree">75°</div></div><div class="solarterm-item">夏至 <div class="degree">90°</div></div><div class="solarterm-item">小暑 <div class="degree">105°</div></div><div class="solarterm-item">大暑 <div class="degree">120°</div></div><div class="solarterm-item">立秋 <div class="degree">135°</div></div><div class="solarterm-item">处暑 <div class="degree">150°</div></div><div class="solarterm-item">白露 <div class="degree">165°</div></div><div class="solarterm-item">秋分 <div class="degree">180°</div></div><div class="solarterm-item">寒露 <div class="degree">195°</div></div><div class="solarterm-item">霜降 <div class="degree">210°</div></div><div class="solarterm-item">立冬 <div class="degree">225°</div></div><div class="solarterm-item">小雪 <div class="degree">240°</div></div><div class="solarterm-item">大雪 <div class="degree">255°</div></div><div class="solarterm-item">冬至 <div class="degree">270°</div></div><div class="solarterm-item">小寒 <div class="degree">285°</div></div><div class="solarterm-item">大寒 <div class="degree">300°</div></div><div class="solarterm-item">立春 <div class="degree">315°</div></div><div class="solarterm-item">雨水 <div class="degree">330°</div></div><div class="solarterm-item">惊蛰 <div class="degree">345°</div></div></div></div>
-                </div>
-                <div id="game-poetry-match" class="game-content" style="display: none;">
-                    <div class="game-container"><div class="game-title"><i class="fas fa-feather-alt"></i> 诗词对仗匹配</div><div class="game-tips">提示：拖拽左侧上联词条到右侧下联对应凹槽，形成「一一映射」的对仗关系！</div><div class="match-container"><div class="match-source"><div class="match-title">上联（拖拽我）</div><div class="match-item" draggable="true" data-id="1">两个</div><div class="match-item" draggable="true" data-id="2">黄鹂</div><div class="match-item" draggable="true" data-id="3">鸣</div><div class="match-item" draggable="true" data-id="4">翠柳</div></div><div class="match-target"><div class="match-title">下联（放入对应位置）</div><div class="match-slot" data-slot="1">请放入数量词</div><div class="match-slot" data-slot="2">请放入名词</div><div class="match-slot" data-slot="3">请放入动词</div><div class="match-slot" data-slot="4">请放入名词</div></div></div><div id="match-result" class="scale-result" style="display: none;">匹配正确！对仗关系符合数学「双射」逻辑</div></div>
-                </div>
-                <div id="game-architecture-scale" class="game-content" style="display: none;">
-                    <div class="game-container"><div class="game-title"><i class="fas fa-ruler"></i> 营造比例尺计算</div><div class="game-tips">提示：《营造法式》中「材」为基准模数（1材=15分=18厘米），请根据比例计算构件实际尺寸！</div><div class="scale-calculator"><div class="scale-item"><label>基准「材」的尺寸（厘米）：</label><input type="number" id="base-material" placeholder="输入18（固定值）" value="18"></div><div class="scale-item"><label>梁高比例（材）：</label><input type="number" id="beam-ratio" placeholder="输入4（固定值）" value="4"></div><div class="scale-item"><label>计算结果：梁高（厘米）=</label><input type="number" id="beam-result" placeholder="请输入计算结果（18×4）"></div><button class="btn-white" style="width: 100%; margin-top: 10px;" onclick="calcScale()">验证答案</button><div id="scale-result" class="scale-result">结果提示</div></div></div>
-                </div>
-                 <div class="game-card" onclick="switchGame('liuhui-field')" style="border-left-color: var(--mathclassic);">
-        <span class="game-tag mathclassic">经典算学</span>
-        <h3>刘徽 · 农田丈量</h3>
-        <div class="math-core">数学核心：割补法、面积计算</div>
-        <div class="play-desc">扮演刘徽，用割补法计算不规则田地面积，体验古代数学的实用智慧。</div>
-    </div>
-</div>
-                <div id="game-golden-ratio" class="game-content" style="display: none;">
-                    <div class="game-container">
-                        <div class="game-title"><i class="fas fa-grip-lines"></i> 黄金比例探索</div>
-                        <div class="game-tips">💡 提示：拖动滑块调整矩形长边，当长宽比接近 1.618（黄金比例 φ）时，矩形会呈现最美观的形态。古代建筑师正是用这个比例来设计建筑的。</div>
-                        <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start;">
-                            <div style="flex: 1; min-width: 300px; background: #fdf8f4; border-radius: 20px; padding: 20px; text-align: center;">
-                                <h4 style="color: var(--primary); margin-bottom: 15px;">📐 动态矩形（高固定为 200px）</h4>
-                                <canvas id="goldenCanvas" width="500" height="300" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);"></canvas>
-                                <p id="goldenRatioDisplay" style="margin-top: 15px; font-size: 18px; font-weight: 600; color: var(--primary);">当前比例：1.000</p>
-                                <p id="goldenFeedback" style="font-size: 14px; color: var(--text-secondary); margin-top: 5px;">目标比例：1.618（φ）</p>
-                            </div>
-                            <div style="flex: 1; min-width: 280px; background: #f5f9fc; border-radius: 20px; padding: 20px;">
-                                <h4 style="color: var(--primary); margin-bottom: 15px;">🎚️ 调整长边长度</h4>
-                                <input type="range" id="goldenSlider" min="200" max="600" value="200" step="1" style="width: 100%; margin: 20px 0;" oninput="updateGoldenRect()">
-                                <p id="sliderValue" style="text-align: center; font-size: 16px; color: var(--primary);">长边：200px</p>
-                                <div id="goldenResult" style="margin-top: 20px; padding: 15px; border-radius: 12px; background: var(--accent-soft); color: var(--text-secondary); font-size: 14px; text-align: center; display: none;">结果提示</div>
-                                <button class="btn-white" onclick="checkGoldenRatio()" style="margin-top: 15px; width: 100%;">✅ 锁定比例</button>
-                            </div>
-                        </div>
-                        <div style="margin-top: 20px; background: #eafaf1; border-radius: 12px; padding: 15px;">
-                            <p style="font-size: 14px; color: var(--primary);">📖 黄金分割在传统建筑中：故宫太和殿立面高宽比接近 0.618（即宽高比接近 1.618）；应县木塔各层高度比也呈现近似黄金分割的递减规律。古人虽未明确提出这一概念，但在实践中不断趋近这一最美的比例。</p>
-                        </div>
+<div id="page-game" class="page">
+    <div class="section">
+        <div class="section-title"><i class="fas fa-gamepad"></i> 文化数学游戏总览</div>
+        
+        <!-- ===== 游戏卡片网格（全部卡片合并） ===== -->
+        <div class="game-grid">
+            <div class="game-card" onclick="switchGame('solarterm-wheel')" style="border-left-color: var(--calendar);">
+                <span class="game-tag calendar">历法天文</span>
+                <h3>节气轮盘</h3>
+                <div class="math-core">数学核心：角度测量、周期函数</div>
+                <div class="play-desc">转动黄道轮盘，将24节气对准对应太阳黄经角度（每节气15°等差数列）</div>
+            </div>
+            <div class="game-card" onclick="switchGame('poetry-match')" style="border-left-color: var(--poetry);">
+                <span class="game-tag poetry">诗词数学</span>
+                <h3>诗词对仗匹配</h3>
+                <div class="math-core">数学核心：映射关系、逻辑配对</div>
+                <div class="play-desc">上联词条散落，拖拽到下联对应位置，形成一一映射的对仗关系</div>
+            </div>
+            <div class="game-card" onclick="switchGame('architecture-scale')" style="border-left-color: var(--architecture);">
+                <span class="game-tag architecture">建筑几何</span>
+                <h3>营造比例尺</h3>
+                <div class="math-core">数学核心：比例计算、模数体系</div>
+                <div class="play-desc">给定《营造法式》材分制基准，计算并验证古建筑各构件实际尺寸</div>
+            </div>
+            <div class="game-card" style="border-left-color: var(--music);">
+                <span class="game-tag music">音律数理</span>
+                <h3>三分损益调音台</h3>
+                <div class="math-core">数学核心：等比数列、频率比</div>
+                <div class="play-desc">拖动滑块改变弦长比例，听音高变化并调出五声音阶（开发中）</div>
+            </div>
+            <div class="game-card" style="border-left-color: var(--mathclassic);">
+                <span class="game-tag mathclassic">经典算学</span>
+                <h3>勾股拼图</h3>
+                <div class="math-core">数学核心：面积守恒、几何证明</div>
+                <div class="play-desc">拖拽直角三角形拼出正方形，验证勾股定理（开发中）</div>
+            </div>
+            <div class="game-card" style="border-left-color: var(--mathclassic);">
+                <span class="game-tag mathclassic">经典算学</span>
+                <h3>算筹解密</h3>
+                <div class="math-core">数学核心：位值制、方程求解</div>
+                <div class="play-desc">用算筹摆出《九章算术》方程并求解（开发中）</div>
+            </div>
+            <div class="game-card" onclick="switchGame('golden-ratio')" style="border-left-color: var(--architecture);">
+                <span class="game-tag architecture">建筑几何</span>
+                <h3>黄金比例探索</h3>
+                <div class="math-core">数学核心：无理数 φ、比例计算、矩形验证</div>
+                <div class="play-desc">拖动滑块调整矩形长边，当长宽比逼近1.618时锁定，验证黄金矩形的视觉和谐感</div>
+            </div>
+            <div class="game-card" onclick="switchGame('liuhui-field')" style="border-left-color: var(--mathclassic);">
+                <span class="game-tag mathclassic">经典算学</span>
+                <h3>刘徽 · 农田丈量</h3>
+                <div class="math-core">数学核心：割补法、面积计算</div>
+                <div class="play-desc">扮演刘徽，用割补法计算不规则田地面积，体验古代数学的实用智慧。</div>
+            </div>
+            <div class="game-card" onclick="switchGame('squizzball')" style="border-left-color: var(--mathclassic);">
+                <span class="game-tag mathclassic">经典算学</span>
+                <h3>Squizzball · 探索之旅</h3>
+                <div class="math-core">数学核心：空间探索、策略规划</div>
+                <div class="play-desc">控制角色探索古代数学世界，收集智慧碎片，躲避邪恶书虫！</div>
+            </div>
+        </div>
+
+        <!-- ===== 节气轮盘 ===== -->
+        <div id="game-solarterm-wheel" class="game-content" style="display: none;">
+            <div class="game-container"><div class="game-title"><i class="fas fa-sun"></i> 节气轮盘挑战</div><div class="game-tips">提示：24节气对应太阳黄经0°~360°，每节气间隔15°（春分0°、清明15°、立夏45°、夏至90°...），拖动轮盘将「当前节气」对准上方标记！</div><div class="solarterm-wheel" id="wheel" onmousedown="startRotate(event)" onmouseup="stopRotate()" onmouseleave="stopRotate()"><div class="wheel-marker"></div><div class="wheel-inner" id="wheel-degree">0°</div></div><div class="solarterm-list"><div class="solarterm-item">春分 <div class="degree">0°</div></div><div class="solarterm-item">清明 <div class="degree">15°</div></div><div class="solarterm-item">谷雨 <div class="degree">30°</div></div><div class="solarterm-item">立夏 <div class="degree">45°</div></div><div class="solarterm-item">小满 <div class="degree">60°</div></div><div class="solarterm-item">芒种 <div class="degree">75°</div></div><div class="solarterm-item">夏至 <div class="degree">90°</div></div><div class="solarterm-item">小暑 <div class="degree">105°</div></div><div class="solarterm-item">大暑 <div class="degree">120°</div></div><div class="solarterm-item">立秋 <div class="degree">135°</div></div><div class="solarterm-item">处暑 <div class="degree">150°</div></div><div class="solarterm-item">白露 <div class="degree">165°</div></div><div class="solarterm-item">秋分 <div class="degree">180°</div></div><div class="solarterm-item">寒露 <div class="degree">195°</div></div><div class="solarterm-item">霜降 <div class="degree">210°</div></div><div class="solarterm-item">立冬 <div class="degree">225°</div></div><div class="solarterm-item">小雪 <div class="degree">240°</div></div><div class="solarterm-item">大雪 <div class="degree">255°</div></div><div class="solarterm-item">冬至 <div class="degree">270°</div></div><div class="solarterm-item">小寒 <div class="degree">285°</div></div><div class="solarterm-item">大寒 <div class="degree">300°</div></div><div class="solarterm-item">立春 <div class="degree">315°</div></div><div class="solarterm-item">雨水 <div class="degree">330°</div></div><div class="solarterm-item">惊蛰 <div class="degree">345°</div></div></div></div>
+        </div>
+
+        <!-- ===== 诗词对仗匹配 ===== -->
+        <div id="game-poetry-match" class="game-content" style="display: none;">
+            <div class="game-container"><div class="game-title"><i class="fas fa-feather-alt"></i> 诗词对仗匹配</div><div class="game-tips">提示：拖拽左侧上联词条到右侧下联对应凹槽，形成「一一映射」的对仗关系！</div><div class="match-container"><div class="match-source"><div class="match-title">上联（拖拽我）</div><div class="match-item" draggable="true" data-id="1">两个</div><div class="match-item" draggable="true" data-id="2">黄鹂</div><div class="match-item" draggable="true" data-id="3">鸣</div><div class="match-item" draggable="true" data-id="4">翠柳</div></div><div class="match-target"><div class="match-title">下联（放入对应位置）</div><div class="match-slot" data-slot="1">请放入数量词</div><div class="match-slot" data-slot="2">请放入名词</div><div class="match-slot" data-slot="3">请放入动词</div><div class="match-slot" data-slot="4">请放入名词</div></div></div><div id="match-result" class="scale-result" style="display: none;">匹配正确！对仗关系符合数学「双射」逻辑</div></div>
+        </div>
+
+        <!-- ===== 营造比例尺 ===== -->
+        <div id="game-architecture-scale" class="game-content" style="display: none;">
+            <div class="game-container"><div class="game-title"><i class="fas fa-ruler"></i> 营造比例尺计算</div><div class="game-tips">提示：《营造法式》中「材」为基准模数（1材=15分=18厘米），请根据比例计算构件实际尺寸！</div><div class="scale-calculator"><div class="scale-item"><label>基准「材」的尺寸（厘米）：</label><input type="number" id="base-material" placeholder="输入18（固定值）" value="18"></div><div class="scale-item"><label>梁高比例（材）：</label><input type="number" id="beam-ratio" placeholder="输入4（固定值）" value="4"></div><div class="scale-item"><label>计算结果：梁高（厘米）=</label><input type="number" id="beam-result" placeholder="请输入计算结果（18×4）"></div><button class="btn-white" style="width: 100%; margin-top: 10px;" onclick="calcScale()">验证答案</button><div id="scale-result" class="scale-result">结果提示</div></div></div>
+        </div>
+
+        <!-- ===== 黄金比例探索 ===== -->
+        <div id="game-golden-ratio" class="game-content" style="display: none;">
+            <div class="game-container">
+                <div class="game-title"><i class="fas fa-grip-lines"></i> 黄金比例探索</div>
+                <div class="game-tips">💡 提示：拖动滑块调整矩形长边，当长宽比接近 1.618（黄金比例 φ）时，矩形会呈现最美观的形态。古代建筑师正是用这个比例来设计建筑的。</div>
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start;">
+                    <div style="flex: 1; min-width: 300px; background: #fdf8f4; border-radius: 20px; padding: 20px; text-align: center;">
+                        <h4 style="color: var(--primary); margin-bottom: 15px;">📐 动态矩形（高固定为 200px）</h4>
+                        <canvas id="goldenCanvas" width="500" height="300" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);"></canvas>
+                        <p id="goldenRatioDisplay" style="margin-top: 15px; font-size: 18px; font-weight: 600; color: var(--primary);">当前比例：1.000</p>
+                        <p id="goldenFeedback" style="font-size: 14px; color: var(--text-secondary); margin-top: 5px;">目标比例：1.618（φ）</p>
+                    </div>
+                    <div style="flex: 1; min-width: 280px; background: #f5f9fc; border-radius: 20px; padding: 20px;">
+                        <h4 style="color: var(--primary); margin-bottom: 15px;">🎚️ 调整长边长度</h4>
+                        <input type="range" id="goldenSlider" min="200" max="600" value="200" step="1" style="width: 100%; margin: 20px 0;" oninput="updateGoldenRect()">
+                        <p id="sliderValue" style="text-align: center; font-size: 16px; color: var(--primary);">长边：200px</p>
+                        <div id="goldenResult" style="margin-top: 20px; padding: 15px; border-radius: 12px; background: var(--accent-soft); color: var(--text-secondary); font-size: 14px; text-align: center; display: none;">结果提示</div>
+                        <button class="btn-white" onclick="checkGoldenRatio()" style="margin-top: 15px; width: 100%;">✅ 锁定比例</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    <!-- 刘徽 · 农田丈量 -->
-<div id="game-liuhui-field" class="game-content" style="display: none;">
-    <div class="game-container">
-        <div class="game-title"><i class="fas fa-draw-polygon"></i> 刘徽 · 农田丈量</div>
-        <div id="liuhui-story" style="background: #fdf8f4; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--accent);">
-            <p style="font-size: 16px; line-height: 1.8; margin: 0;">
-                <i class="fas fa-quote-left" style="color: var(--accent); margin-right: 8px;"></i>
-                你，<strong>刘徽</strong>，在乡间遇到一位老农。他有一块 L 形的田地，想计算面积。
-                老农说：“左边矩形长 6 步、宽 3 步；下边矩形长 4 步、宽 2 步。请先生帮我算算总面积吧！”
-            </p>
-        </div>
-<div id="game-liuhui-field" class="game-content" style="display: none;">
-    ...（刘徽内容）...
-</div>   <!-- ← 这里是刘徽游戏的结束 -->
-
-<!-- ✅ 在这里插入 Squizzball -->
-<div id="game-squizzball" class="game-content" style="display: none;">
-    <div class="game-container">
-        <div class="game-title"><i class="fas fa-gamepad"></i> Squizzball · 探索之旅</div>
-        <div class="game-tips">💡 提示：使用 <strong>方向键</strong> 或 <strong>WASD</strong> 控制角色移动，空格键确认。探索地图，收集智慧碎片，躲避敌人！</div>
-        <iframe src="games/squizzball/index.html" 
-                style="width: 100%; height: 600px; border: none; border-radius: 12px; background: #2c3e50;"
-                allowfullscreen>
-        </iframe>
-    </div>
-</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: center;">
-            <div>
-                <canvas id="fieldCanvas" width="400" height="300" style="border: 2px solid #d5c8b8; border-radius: 12px; background: #f7f2eb; box-shadow: 0 4px 12px rgba(0,0,0,0.05);"></canvas>
-                <p style="text-align: center; font-size: 14px; color: var(--text-secondary); margin-top: 8px;">📐 L 形田地示意图（单位：步）</p>
-            </div>
-            <div style="min-width: 200px;">
-                <p style="font-weight: 600; color: var(--primary);">总面积 = ？</p>
-                <div id="field-options" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-                    <button class="option-btn" data-value="20">A. 20 平方步</button>
-                    <button class="option-btn" data-value="26">B. 26 平方步</button>
-                    <button class="option-btn" data-value="28">C. 28 平方步</button>
-                    <button class="option-btn" data-value="32">D. 32 平方步</button>
+                <div style="margin-top: 20px; background: #eafaf1; border-radius: 12px; padding: 15px;">
+                    <p style="font-size: 14px; color: var(--primary);">📖 黄金分割在传统建筑中：故宫太和殿立面高宽比接近 0.618（即宽高比接近 1.618）；应县木塔各层高度比也呈现近似黄金分割的递减规律。古人虽未明确提出这一概念，但在实践中不断趋近这一最美的比例。</p>
                 </div>
-                <div id="field-feedback" style="margin-top: 15px; padding: 12px; border-radius: 8px; display: none;"></div>
-                <button id="field-next" style="margin-top: 15px; padding: 8px 24px; background: var(--accent); color: white; border: none; border-radius: 25px; cursor: pointer; display: none;">继续探索 →</button>
             </div>
         </div>
 
-        <div id="gebu-card" style="display: none; margin-top: 30px; padding: 20px; background: #eafaf1; border-radius: 12px; border-left: 5px solid var(--mathclassic);">
-            <h4 style="color: var(--mathclassic);"><i class="fas fa-lightbulb"></i> 割补法 · 数学智慧</h4>
-            <p style="font-size: 15px; line-height: 1.8;">刘徽在《九章算术注》中提出 <strong>“割补法”</strong>：将不规则图形切割成若干规则图形（如矩形、三角形），分别计算面积再相加。这种方法至今仍在几何学中广泛使用。</p>
-            <p style="font-size: 14px; color: var(--text-secondary); margin-top: 10px;">✅ 你已掌握割补法！可以继续下一关。</p>
-        </div>
-    </div>
-</div>
+        <!-- ===== 刘徽 · 农田丈量 ===== -->
+        <div id="game-liuhui-field" class="game-content" style="display: none;">
+            <div class="game-container">
+                <div class="game-title"><i class="fas fa-draw-polygon"></i> 刘徽 · 农田丈量</div>
+                <div id="liuhui-story" style="background: #fdf8f4; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--accent);">
+                    <p style="font-size: 16px; line-height: 1.8; margin: 0;">
+                        <i class="fas fa-quote-left" style="color: var(--accent); margin-right: 8px;"></i>
+                        你，<strong>刘徽</strong>，在乡间遇到一位老农。他有一块 L 形的田地，想计算面积。
+                        老农说：“左边矩形长 6 步、宽 3 步；下边矩形长 4 步、宽 2 步。请先生帮我算算总面积吧！”
+                    </p>
+                </div>
 
-        <!-- 关于我们 -->
+                <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: center;">
+                    <div>
+                        <canvas id="fieldCanvas" width="400" height="300" style="border: 2px solid #d5c8b8; border-radius: 12px; background: #f7f2eb; box-shadow: 0 4px 12px rgba(0,0,0,0.05);"></canvas>
+                        <p style="text-align: center; font-size: 14px; color: var(--text-secondary); margin-top: 8px;">📐 L 形田地示意图（单位：步）</p>
+                    </div>
+                    <div style="min-width: 200px;">
+                        <p style="font-weight: 600; color: var(--primary);">总面积 = ？</p>
+                        <div id="field-options" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                            <button class="option-btn" data-value="20">A. 20 平方步</button>
+                            <button class="option-btn" data-value="26">B. 26 平方步</button>
+                            <button class="option-btn" data-value="28">C. 28 平方步</button>
+                            <button class="option-btn" data-value="32">D. 32 平方步</button>
+                        </div>
+                        <div id="field-feedback" style="margin-top: 15px; padding: 12px; border-radius: 8px; display: none;"></div>
+                        <button id="field-next" style="margin-top: 15px; padding: 8px 24px; background: var(--accent); color: white; border: none; border-radius: 25px; cursor: pointer; display: none;">继续探索 →</button>
+                    </div>
+                </div>
+
+                <div id="gebu-card" style="display: none; margin-top: 30px; padding: 20px; background: #eafaf1; border-radius: 12px; border-left: 5px solid var(--mathclassic);">
+                    <h4 style="color: var(--mathclassic);"><i class="fas fa-lightbulb"></i> 割补法 · 数学智慧</h4>
+                    <p style="font-size: 15px; line-height: 1.8;">刘徽在《九章算术注》中提出 <strong>“割补法”</strong>：将不规则图形切割成若干规则图形（如矩形、三角形），分别计算面积再相加。这种方法至今仍在几何学中广泛使用。</p>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-top: 10px;">✅ 你已掌握割补法！可以继续下一关。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Squizzball · 探索之旅 ===== -->
+        <div id="game-squizzball" class="game-content" style="display: none;">
+            <div class="game-container">
+                <div class="game-title"><i class="fas fa-gamepad"></i> Squizzball · 探索之旅</div>
+                <div class="game-tips">💡 提示：使用 <strong>方向键</strong> 或 <strong>WASD</strong> 控制角色移动，空格键确认。探索地图，收集智慧碎片，躲避敌人！</div>
+                <iframe src="games/squizzball/index.html" 
+                        style="width: 100%; height: 600px; border: none; border-radius: 12px; background: #2c3e50;"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+    </div> <!-- section 结束 -->
+</div> <!-- page-game 结束 -->
         <div id="page-about" class="page">
             <div class="section">
                 <div class="section-title"><i class="fas fa-info-circle"></i> 关于数蕴文脉</div>
